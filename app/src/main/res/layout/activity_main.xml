@@ -21,9 +21,4 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="agsdfg"/>
 </android.support.design.widget.CoordinatorLayout>

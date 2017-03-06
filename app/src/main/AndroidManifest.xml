@@ -19,6 +19,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/PLACES_API_KEY" />
+
+        <provider
+            android:name=".data.generated.DataProvider"
+            android:authorities="com.rajat.android.aller.data.DataProvider"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.rajat.android.aller.ui.fragments;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +27,7 @@ import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
 
@@ -103,13 +103,13 @@ public class FutureLocationsFragment extends Fragment implements
         Place place = getPlace(getContext(), data);
         ContentValues values = new ContentValues();
         values.put(TableColumns.PLACE_ID, place.getId());
-        values.put(TableColumns.PLACE_NAME, (place.getName()).toString());
-        values.put(TableColumns.PLACE_ADDRESS, (place.getAddress()).toString());
-        values.put(TableColumns.PLACE_PHONE, place.getPhoneNumber().toString());
-        values.put(TableColumns.PLACE_WEBSITE, place.getWebsiteUri().toString());
+        values.put(TableColumns.PLACE_NAME, Utilities.convertToString(place.getName()));
+        values.put(TableColumns.PLACE_ADDRESS, Utilities.convertToString(place.getAddress()));
+        values.put(TableColumns.PLACE_PHONE, Utilities.convertToString(place.getPhoneNumber()));
+        values.put(TableColumns.PLACE_WEBSITE, Utilities.convertToString(place.getWebsiteUri()));
         values.put(PLACE_LATITUDE, place.getLatLng().latitude);
         values.put(TableColumns.PLACE_LONGITUDE, place.getLatLng().longitude);
-        values.put(TableColumns.PLACE_RATING, place.getRating());
+        values.put(TableColumns.PLACE_RATING, Utilities.convertToString(place.getRating()));
 
         getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
         Log.d("..........", "saved!!");

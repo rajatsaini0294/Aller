@@ -63,7 +63,7 @@ public class FutureLocationsFragment extends Fragment implements
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
-        imageView = (ImageView) view.findViewById(R.id.image);
+        //imageView = (ImageView) view.findViewById(R.id.image);
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class FutureLocationsFragment extends Fragment implements
             if (!placePhotoResult.getStatus().isSuccess()) {
                 return;
             }
-            imageView.setImageBitmap(placePhotoResult.getBitmap());
+            //imageView.setImageBitmap(placePhotoResult.getBitmap());
         }
     };
 

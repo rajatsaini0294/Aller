@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.rajat.android.aller.ui.fragments.FavouriteLocationsFragment;
 import com.rajat.android.aller.ui.fragments.FutureLocationsFragment;
 import com.rajat.android.aller.ui.fragments.VisitedLocationsFragment;
 
@@ -22,23 +21,21 @@ public class CustomPagerAdapter extends FragmentPagerAdapter{
         switch (position)
         {
             case 0: return new VisitedLocationsFragment();
-            case 1: return new FavouriteLocationsFragment();
-            case 2: return new FutureLocationsFragment();
+            case 1: return new FutureLocationsFragment();
             default: return new VisitedLocationsFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0: return "Visited";
-            case 1: return "Favourite";
-            case 2: return "To visit";
+            case 1: return "To visit";
             default: return "Visited";
         }
     }

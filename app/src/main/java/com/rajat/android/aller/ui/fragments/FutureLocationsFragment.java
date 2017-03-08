@@ -1,12 +1,15 @@
 package com.rajat.android.aller.ui.fragments;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +28,12 @@ import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.data.DataProvider;
+import com.rajat.android.aller.data.TableColumns;
 
 import static android.app.Activity.RESULT_OK;
+import static com.google.android.gms.location.places.ui.PlacePicker.getPlace;
+import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,12 +90,29 @@ public class FutureLocationsFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, getContext());
+                Place place = getPlace(data, getContext());
                 String toastMsg = String.format("Place: %s", place.getId());
                 Toast.makeText(getContext(), toastMsg, Toast.LENGTH_LONG).show();
-                placePhotosAsync(place.getId());
+                //placePhotosAsync(place.getId());
+                saveToDb(data);
             }
         }
+    }
+
+    private void saveToDb(Intent data){
+        Place place = getPlace(getContext(), data);
+        ContentValues values = new ContentValues();
+        values.put(TableColumns.PLACE_ID, place.getId());
+        values.put(TableColumns.PLACE_NAME, (place.getName()).toString());
+        values.put(TableColumns.PLACE_ADDRESS, (place.getAddress()).toString());
+        values.put(TableColumns.PLACE_PHONE, place.getPhoneNumber().toString());
+        values.put(TableColumns.PLACE_WEBSITE, place.getWebsiteUri().toString());
+        values.put(PLACE_LATITUDE, place.getLatLng().latitude);
+        values.put(TableColumns.PLACE_LONGITUDE, place.getLatLng().longitude);
+        values.put(TableColumns.PLACE_RATING, place.getRating());
+
+        getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
+        Log.d("..........", "saved!!");
     }
 
     private ResultCallback<PlacePhotoResult> mDisplayPhotoResultCallback

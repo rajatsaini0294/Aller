@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.rajat.android.aller.R;
 import com.rajat.android.aller.Util.Utilities;
+import com.rajat.android.aller.adapters.GridAdapter;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
 
@@ -64,6 +67,13 @@ public class FutureLocationsFragment extends Fragment implements
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
         //imageView = (ImageView) view.findViewById(R.id.image);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(layoutManager);
+
+        GridAdapter adapter = new GridAdapter(getContext());
+        recyclerView.setAdapter(adapter);
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

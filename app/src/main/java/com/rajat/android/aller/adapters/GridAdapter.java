@@ -2,6 +2,7 @@ package com.rajat.android.aller.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,10 +52,12 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder{
-        public TextView textView;
+        private TextView textView;
+        private CardView cardView;
         public GridViewHolder(View view) {
             super(view);
             textView = (TextView) view.findViewById(R.id.textView);
+            cardView = (CardView) view.findViewById(R.id.card_view);
         }
     }
 }

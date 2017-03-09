@@ -43,7 +43,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         Log.d("............", position+" ..."+cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
         GridViewHolder gridViewHolder = (GridViewHolder) holder;
-        gridViewHolder.textView.setText(cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
+        gridViewHolder.textView.setText(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_NAME)));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private CardView cardView;
         public GridViewHolder(View view) {
             super(view);
-            textView = (TextView) view.findViewById(R.id.textView);
+            textView = (TextView) view.findViewById(R.id.place_name);
             cardView = (CardView) view.findViewById(R.id.card_view);
         }
     }

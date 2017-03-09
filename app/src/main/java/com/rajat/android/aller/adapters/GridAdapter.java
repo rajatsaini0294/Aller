@@ -39,6 +39,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         cursor.moveToPosition(position);
+
         Log.d("............", position+" ..."+cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
         GridViewHolder gridViewHolder = (GridViewHolder) holder;
         gridViewHolder.textView.setText(cursor.getString(cursor.getColumnIndex(TableColumns._ID)));

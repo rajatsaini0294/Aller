@@ -3,11 +3,16 @@ package com.rajat.android.aller.ui.fragments;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,13 +47,14 @@ import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
  * A simple {@link Fragment} subclass.
  */
 public class FutureLocationsFragment extends Fragment implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     FloatingActionButton floatingActionButton;
     int PLACE_PICKER_REQUEST = 1;
     ImageView imageView;
     GoogleApiClient mGoogleApiClient;
-
+    GridAdapter adapter;
+    RecyclerView recyclerView;
     public FutureLocationsFragment() {
         // Required empty public constructor
     }
@@ -56,6 +62,8 @@ public class FutureLocationsFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().getSupportLoaderManager().initLoader(1,null,this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -67,13 +75,12 @@ public class FutureLocationsFragment extends Fragment implements
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
         //imageView = (ImageView) view.findViewById(R.id.image);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
+       recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
-        GridAdapter adapter = new GridAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -192,5 +199,32 @@ public class FutureLocationsFragment extends Fragment implements
             mGoogleApiClient.disconnect();
         }
         super.onStop();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Uri FUTURE_URI = DataProvider.ToVisit.CONTENT_URI;
+        CursorLoader cursorLoader = new CursorLoader(this.getActivity(), FUTURE_URI,
+                new String[]{ TableColumns._ID, TableColumns.PLACE_ID, TableColumns.PLACE_NAME,
+                        TableColumns.PLACE_ADDRESS, TableColumns.PLACE_PHONE, TableColumns.PLACE_WEBSITE,
+                        TableColumns.PLACE_LATITUDE, TableColumns.PLACE_LONGITUDE,
+                        TableColumns.PLACE_RATING, TableColumns.PLACE_IMAGE},
+                null,
+                null,
+                null);
+
+        return cursorLoader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        cursor.moveToFirst();
+        adapter = new GridAdapter(getContext(), cursor);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

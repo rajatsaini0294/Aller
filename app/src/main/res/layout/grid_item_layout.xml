@@ -36,6 +36,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|bottom"
                     android:padding="16dp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
             </LinearLayout>

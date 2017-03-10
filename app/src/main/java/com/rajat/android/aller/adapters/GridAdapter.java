@@ -57,6 +57,12 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Float ratingValue = Utilities.parseRating(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING)));
         gridViewHolder.ratingBar.setRating(ratingValue);
         Log.d("............", ratingValue+"");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 

@@ -112,6 +112,7 @@ public class LocationPOJO implements Parcelable {
         place_website = in.readString();
         place_latitude = in.readString();
         place_longitude = in.readString();
+        place_rating = in.readString();
         //place_image = in.readByteArray();
 
     }
@@ -143,6 +144,7 @@ public class LocationPOJO implements Parcelable {
         parcel.writeString(place_website);
         parcel.writeString(place_latitude);
         parcel.writeString(place_longitude);
+        parcel.writeString(place_rating);
         //parcel.writeString(_id);
     }
 }

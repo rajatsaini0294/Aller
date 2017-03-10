@@ -15,14 +15,18 @@ public class LocationDetailsActivity extends AppCompatActivity {
     LocationPOJO locationPOJO;
     TextView textView;
     Toolbar toolbar;
+    String placeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationPOJO = getIntent().getParcelableExtra(PARCEL_KEY);
         setContentView(R.layout.activity_location_details);
+
         textView = (TextView) findViewById(R.id.place_name);
-        textView.setText(locationPOJO.getPlace_name());
+
+        placeName = locationPOJO.getPlace_name();
+        textView.setText(placeName);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -36,5 +40,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        getSupportActionBar().setTitle(placeName);
     }
 }

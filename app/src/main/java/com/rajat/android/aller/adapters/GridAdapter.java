@@ -102,6 +102,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             locationPOJO.setPlace_website(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_WEBSITE)));
             locationPOJO.setPlace_latitude(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_LATITUDE)));
             locationPOJO.setPlace_longitude(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_LONGITUDE)));
+            locationPOJO.setPlace_rating(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING)));
             locationPOJO.setPlace_image(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_IMAGE)));
 
             return locationPOJO;

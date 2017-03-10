@@ -6,9 +6,11 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.model.LocationPOJO;
 
 public class LocationDetailsActivity extends AppCompatActivity {
@@ -17,9 +19,11 @@ public class LocationDetailsActivity extends AppCompatActivity {
     LocationPOJO locationPOJO;
     TextView placeNameTextView;
     Toolbar toolbar;
+    RatingBar ratingBar;
 
     String placeName;
     String placeAddress;
+    String placeRating;
 
     CardView cardView;
     ImageView placeImage;
@@ -35,6 +39,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
         cardView = (CardView) findViewById(R.id.card_view);
         placeImage = (ImageView) findViewById(R.id.place_image);
         placeAddressTextView = (TextView) findViewById(R.id.place_address);
+        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
 
         placeName = locationPOJO.getPlace_name();
         placeNameTextView.setText(placeName);
@@ -45,6 +50,9 @@ public class LocationDetailsActivity extends AppCompatActivity {
         } else {
             placeAddressTextView.setText(placeAddress);
         }
+
+        placeRating = locationPOJO.getPlace_rating();
+        ratingBar.setRating(Utilities.parseRating(placeRating));
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

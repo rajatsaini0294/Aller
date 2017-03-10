@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.TableColumns;
 
 /**
@@ -41,9 +43,21 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         cursor.moveToPosition(position);
 
-        Log.d("............", position+" ..."+cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
         GridViewHolder gridViewHolder = (GridViewHolder) holder;
         gridViewHolder.textView.setText(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_NAME)));
+        /*Float rating;
+        String value = cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING));
+        if(value == null){
+            rating = Float.valueOf("0");
+        }else{
+            rating = Float.parseFloat(value);
+        }
+        gridViewHolder.ratingBar.setRating(rating);
+        */
+        Float ratingValue = Utilities.parseRating(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING)));
+        gridViewHolder.ratingBar.setRating(ratingValue);
+        Log.d("............", ratingValue+"");
+
     }
 
     @Override
@@ -54,10 +68,13 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class GridViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
         private CardView cardView;
+        private RatingBar ratingBar;
+
         public GridViewHolder(View view) {
             super(view);
             textView = (TextView) view.findViewById(R.id.place_name);
             cardView = (CardView) view.findViewById(R.id.card_view);
+            ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
         }
     }
 }

@@ -25,4 +25,13 @@ public class Utilities {
         }
         return null;
     }
+
+    public static Float parseRating(String string){
+        Float value = Float.parseFloat(string);
+        if(value>0){
+            return value;
+        }
+        return Float.parseFloat("1");
+
+    }
 }

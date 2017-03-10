@@ -20,6 +20,49 @@ public class LocationPOJO implements Parcelable {
     public String place_rating;
     public String place_image;
 
+    public LocationPOJO() {
+    }
+
+    public String getPlace_image() {
+        return place_image;
+    }
+
+    public String getPlace_rating() {
+        return place_rating;
+    }
+
+    public String getPlace_longitude() {
+        return place_longitude;
+    }
+
+    public String getPlace_latitude() {
+        return place_latitude;
+    }
+
+    public String getPlace_website() {
+        return place_website;
+    }
+
+    public String getPlace_phone() {
+        return place_phone;
+    }
+
+    public String getPlace_address() {
+        return place_address;
+    }
+
+    public String getPlace_name() {
+        return place_name;
+    }
+
+    public String getPlace_id() {
+        return place_id;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
     public void set_id(String _id) {
         this._id = _id;
     }

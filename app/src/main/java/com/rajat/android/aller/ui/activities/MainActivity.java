@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private int createAppDirectory(String folderName) {
 
         String state = Environment.getExternalStorageState();
-        if (!Environment.MEDIA_MOUNTED.equals(state)){
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
             Log.d("myAppName", "Error: external storage is unavailable");
             return 0;
         }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("myAppName", "Error: external storage is read only.");
             return 0;
         }
-       // Log.d("myAppName", "External storage is not read only or unavailable");
+        // Log.d("myAppName", "External storage is not read only or unavailable");
 
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
         int result = 0;
@@ -121,36 +121,24 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
-                    int result = 0;
                     if (folder.exists()) {
                         Log.d("............", "folder exist:" + folder.toString());
-                        result = 2; // folder exist
                     } else {
                         try {
                             if (folder.mkdir()) {
                                 Log.d("................", "folder created:" + folder.toString());
-                                result = 1; // folder created
                             } else {
                                 Log.d("..................", "creat folder fails:" + folder.toString());
-                                result = 0; // creat folder fails
                             }
                         } catch (Exception ecp) {
                             ecp.printStackTrace();
                         }
                     }
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 }

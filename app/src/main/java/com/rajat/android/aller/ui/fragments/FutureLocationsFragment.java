@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -107,9 +106,9 @@ public class FutureLocationsFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = getPlace(data, getContext());
-                String toastMsg = String.format("Place: %s", place.getId());
-                Toast.makeText(getContext(), toastMsg, Toast.LENGTH_LONG).show();
+                //Place place = getPlace(data, getContext());
+               // String toastMsg = String.format("Place: %s", place.getId());
+               // Toast.makeText(getContext(), toastMsg, Toast.LENGTH_LONG).show();
                 //placePhotosAsync(place.getId());
                 saveToDb(data);
             }

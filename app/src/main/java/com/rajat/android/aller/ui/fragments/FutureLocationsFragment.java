@@ -62,6 +62,7 @@ public class FutureLocationsFragment extends Fragment implements
     GridAdapter adapter;
     RecyclerView recyclerView;
     LocationPOJO locationPOJO;
+
     public FutureLocationsFragment() {
         // Required empty public constructor
     }
@@ -70,7 +71,7 @@ public class FutureLocationsFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().getSupportLoaderManager().initLoader(1,null,this);
+        getActivity().getSupportLoaderManager().initLoader(1, null, this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -82,11 +83,10 @@ public class FutureLocationsFragment extends Fragment implements
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
         //imageView = (ImageView) view.findViewById(R.id.image);
-       recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-
 
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);
@@ -115,15 +115,15 @@ public class FutureLocationsFragment extends Fragment implements
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 //Place place = getPlace(data, getContext());
-               // String toastMsg = String.format("Place: %s", place.getId());
-               // Toast.makeText(getContext(), toastMsg, Toast.LENGTH_LONG).show();
+                // String toastMsg = String.format("Place: %s", place.getId());
+                // Toast.makeText(getContext(), toastMsg, Toast.LENGTH_LONG).show();
                 //placePhotosAsync(place.getId());
                 saveToDb(data);
             }
         }
     }
 
-    private void saveToDb(Intent data){
+    private void saveToDb(Intent data) {
         Place place = getPlace(getContext(), data);
      /*   ContentValues values = new ContentValues();
         values.put(TableColumns.PLACE_ID, place.getId());
@@ -143,15 +143,14 @@ public class FutureLocationsFragment extends Fragment implements
         locationPOJO.setPlace_name(Utilities.convertToString(place.getName()));
         locationPOJO.setPlace_address(Utilities.convertToString(place.getAddress()));
         locationPOJO.setPlace_phone(Utilities.convertToString(place.getPhoneNumber()));
-        locationPOJO.setPlace_website( Utilities.convertToString(place.getWebsiteUri()));
-        locationPOJO.setPlace_latitude((place.getLatLng().latitude)+"");
-        locationPOJO.setPlace_longitude(place.getLatLng().longitude+"");
+        locationPOJO.setPlace_website(Utilities.convertToString(place.getWebsiteUri()));
+        locationPOJO.setPlace_latitude((place.getLatLng().latitude) + "");
+        locationPOJO.setPlace_longitude(place.getLatLng().longitude + "");
         locationPOJO.setPlace_rating(Utilities.convertToString(place.getRating()));
 
         new saveDataAsync().execute(locationPOJO);
         Log.d("..........", "saved!!");
     }
-
 
 
     private ResultCallback<PlacePhotoResult> mDisplayPhotoResultCallback
@@ -227,7 +226,7 @@ public class FutureLocationsFragment extends Fragment implements
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri FUTURE_URI = DataProvider.ToVisit.CONTENT_URI;
         CursorLoader cursorLoader = new CursorLoader(this.getActivity(), FUTURE_URI,
-                new String[]{ TableColumns._ID, TableColumns.PLACE_ID, TableColumns.PLACE_NAME,
+                new String[]{TableColumns._ID, TableColumns.PLACE_ID, TableColumns.PLACE_NAME,
                         TableColumns.PLACE_ADDRESS, TableColumns.PLACE_PHONE, TableColumns.PLACE_WEBSITE,
                         PLACE_LATITUDE, TableColumns.PLACE_LONGITUDE,
                         TableColumns.PLACE_RATING, TableColumns.PLACE_IMAGE},
@@ -243,6 +242,7 @@ public class FutureLocationsFragment extends Fragment implements
         cursor.moveToFirst();
         adapter = new GridAdapter(getContext(), cursor);
         recyclerView.setAdapter(adapter);
+        Log.d("............", "adapter set");
     }
 
     @Override
@@ -250,16 +250,18 @@ public class FutureLocationsFragment extends Fragment implements
 
     }
 
-    class saveDataAsync extends AsyncTask{
+    class saveDataAsync extends AsyncTask {
 
         String placeId = null;
-        public saveDataAsync(){
+
+        public saveDataAsync() {
 
         }
+
         @Override
         protected String doInBackground(Object[] objects) {
             LocationPOJO object = (LocationPOJO) objects[0];
-            if(object!=null){
+            if (object != null) {
                 ContentValues values = new ContentValues();
                 placeId = object.getPlace_id();
                 values.put(TableColumns.PLACE_ID, object.getPlace_id());
@@ -273,14 +275,11 @@ public class FutureLocationsFragment extends Fragment implements
                 values.put(TableColumns.PLACE_RATING, object.getPlace_rating());
 
 
-
                 getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
 
             }
             return null;
         }
-
-
 
 
         @Override
@@ -291,16 +290,18 @@ public class FutureLocationsFragment extends Fragment implements
         }
     }
 
-    class savePlaceImageAsyncTask extends AsyncTask{
+    class savePlaceImageAsyncTask extends AsyncTask {
 
         @Override
         protected Object doInBackground(Object[] objects) {
             String placeId = (String) objects[0];
             ContentValues values = new ContentValues();
             File file = getPlacePhoto(placeId);
-            if(file.exists()){
-                values.put(TableColumns.PLACE_IMAGE, file.toString());
-            }else{
+            if (file != null) {
+                if (file.exists()) {
+                    values.put(TableColumns.PLACE_IMAGE, file.toString());
+                }
+            } else {
                 values.put(TableColumns.PLACE_IMAGE, (String) null);
             }
             return null;
@@ -319,9 +320,17 @@ public class FutureLocationsFragment extends Fragment implements
                     .getPlacePhotos(mGoogleApiClient, place_id).await();
             if (result != null && result.getStatus().isSuccess()) {
                 PlacePhotoMetadataBuffer photoMetadataBuffer = result.getPhotoMetadata();
-                PlacePhotoMetadata photo = photoMetadataBuffer.get(0);
-                Bitmap bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
-                if(bitmap != null) {
+                PlacePhotoMetadata photo = null;
+                Bitmap bitmap = null;
+                try {
+                    photo = photoMetadataBuffer.get(0);
+                } catch (Exception ex) {
+
+                }
+                if (photo != null) {
+                    bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
+                }
+                if (bitmap != null) {
                     imagePath = Utilities.convertBitmapToJPEG(bitmap);
                 }
                 photoMetadataBuffer.release();

@@ -68,7 +68,7 @@ public class Utilities {
 
     public static File getPathToImage(String imageName){
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
-        File imagePath = new File(folder, imageName);
+        File imagePath = new File(folder, imageName+".jpg");
         return imagePath;
     }
 }

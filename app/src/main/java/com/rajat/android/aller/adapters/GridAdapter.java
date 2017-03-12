@@ -83,7 +83,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         File file = Utilities.getPathToImage(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_ID)));
         Log.d("............", ""+file);
         if(file!=null && file.exists()) {
-            Picasso.with(context).load(file.toString()).into(gridViewHolder.imageView);
+            Picasso.with(context).load(file).into(gridViewHolder.imageView);
             Log.d("............", "picasso run");
         }
     }

@@ -29,7 +29,7 @@ import java.io.File;
 
 public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    Cursor cursor;
+    Cursor cursor = null;
     final private String PARCEL_KEY = "parcelKey";
 
     public GridAdapter(Context context) {
@@ -50,10 +50,11 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        cursor.moveToPosition(position);
+        if(cursor!=null) {
+            cursor.moveToPosition(position);
 
-        GridViewHolder gridViewHolder = (GridViewHolder) holder;
-        gridViewHolder.textView.setText(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_NAME)));
+            GridViewHolder gridViewHolder = (GridViewHolder) holder;
+            gridViewHolder.textView.setText(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_NAME)));
         /*Float rating;
         String value = cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING));
         if(value == null){
@@ -63,28 +64,29 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         gridViewHolder.ratingBar.setRating(rating);
         */
-        Float ratingValue = Utilities.parseRating(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING)));
-        gridViewHolder.ratingBar.setRating(ratingValue);
-        Log.d("............", ratingValue + "");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cursor.moveToPosition(position);
-                Log.d("..........", "Clicked " + position + " " + cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
-                Parcelable parcelable = exportToParcel(position);
-                if(parcelable != null){
-                    Intent intent = new Intent(context, LocationDetailsActivity.class);
-                    intent.putExtra(PARCEL_KEY, parcelable);
-                    context.startActivity(intent);
+            Float ratingValue = Utilities.parseRating(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_RATING)));
+            gridViewHolder.ratingBar.setRating(ratingValue);
+            Log.d("............", ratingValue + "");
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cursor.moveToPosition(position);
+                    Log.d("..........", "Clicked " + position + " " + cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
+                    Parcelable parcelable = exportToParcel(position);
+                    if (parcelable != null) {
+                        Intent intent = new Intent(context, LocationDetailsActivity.class);
+                        intent.putExtra(PARCEL_KEY, parcelable);
+                        context.startActivity(intent);
+                    }
                 }
-            }
-        });
+            });
 
-        File file = Utilities.getPathToImage(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_ID)));
-        Log.d("............", ""+file);
-        if(file!=null && file.exists()) {
-            Picasso.with(context).load(file).into(gridViewHolder.imageView);
-            Log.d("............", "picasso run");
+            File file = Utilities.getPathToImage(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_ID)));
+            Log.d("............", "" + file);
+            if (file != null && file.exists()) {
+                Picasso.with(context).load(file).into(gridViewHolder.imageView);
+                Log.d("............", "picasso run");
+            }
         }
     }
 
@@ -122,7 +124,9 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+        if(cursor!=null) {
+            return cursor.getCount();
+        } return 0;
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder {
@@ -138,5 +142,9 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
             imageView = (ImageView) view.findViewById(R.id.place_image);
         }
+    }
+
+    public void setCursor(Cursor cursor){
+        this.cursor = cursor;
     }
 }

@@ -88,6 +88,8 @@ public class FutureLocationsFragment extends Fragment implements
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
+        adapter = new GridAdapter(getContext());
+        recyclerView.setAdapter(adapter);
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -240,8 +242,8 @@ public class FutureLocationsFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
-        adapter = new GridAdapter(getContext(), cursor);
-        recyclerView.setAdapter(adapter);
+        adapter.setCursor(cursor);
+        adapter.notifyDataSetChanged();
         Log.d("............", "adapter set");
     }
 

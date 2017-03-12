@@ -312,6 +312,7 @@ public class FutureLocationsFragment extends Fragment implements
             super.onPostExecute(o);
             Toast.makeText(getContext(), "Image Saved To db", Toast.LENGTH_LONG).show();
             Log.d("............", "image saved to store");
+            adapter.notifyDataSetChanged();
         }
 
         private File getPlacePhoto(String place_id) {

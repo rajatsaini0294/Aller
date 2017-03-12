@@ -5,7 +5,6 @@ import net.simonvt.schematic.annotation.DataType;
 import net.simonvt.schematic.annotation.NotNull;
 import net.simonvt.schematic.annotation.PrimaryKey;
 
-import static net.simonvt.schematic.annotation.DataType.Type.BLOB;
 import static net.simonvt.schematic.annotation.DataType.Type.INTEGER;
 import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
 
@@ -23,6 +22,6 @@ public interface TableColumns {
     @DataType(TEXT) @NotNull String PLACE_LATITUDE = "place_latitude";
     @DataType(TEXT) @NotNull String PLACE_LONGITUDE = "place_longitude";
     @DataType(TEXT) String PLACE_RATING = "place_rating";
-    @DataType(BLOB) String PLACE_IMAGE = "place_image";
+    @DataType(TEXT) String PLACE_IMAGE = "place_image";
 
 }

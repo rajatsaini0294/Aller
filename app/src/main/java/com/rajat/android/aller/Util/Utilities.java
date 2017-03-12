@@ -1,6 +1,12 @@
 package com.rajat.android.aller.Util;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Created by rajat on 3/8/2017.
@@ -33,5 +39,13 @@ public class Utilities {
         }
         return Float.parseFloat("1");
 
+    }
+
+
+
+    public static String getTimeStamp() {
+        Long tsLong = System.currentTimeMillis()/1000;
+        String timestamp = tsLong.toString();
+        return timestamp;
     }
 }

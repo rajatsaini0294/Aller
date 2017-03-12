@@ -269,6 +269,7 @@ public class FutureLocationsFragment extends Fragment implements
             return null;
         }
 
+
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);

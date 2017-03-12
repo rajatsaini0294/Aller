@@ -46,7 +46,7 @@ public class Utilities {
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
         if (folder.exists()) {
             Log.d("............", "folder exist:" + folder.toString());
-            String imageName = "image_"+ Utilities.getTimeStamp();
+            String imageName = "image_"+ Utilities.getTimeStamp()+".jpg";
             File file = new File(folder, imageName);
             if(!file.exists()){
                 try {

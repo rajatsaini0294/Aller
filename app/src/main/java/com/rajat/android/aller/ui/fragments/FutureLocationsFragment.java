@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -37,6 +39,7 @@ import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.adapters.GridAdapter;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
+import com.rajat.android.aller.model.LocationPOJO;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.location.places.ui.PlacePicker.getPlace;
@@ -54,6 +57,7 @@ public class FutureLocationsFragment extends Fragment implements
     GoogleApiClient mGoogleApiClient;
     GridAdapter adapter;
     RecyclerView recyclerView;
+    LocationPOJO locationPOJO;
     public FutureLocationsFragment() {
         // Required empty public constructor
     }
@@ -117,7 +121,7 @@ public class FutureLocationsFragment extends Fragment implements
 
     private void saveToDb(Intent data){
         Place place = getPlace(getContext(), data);
-        ContentValues values = new ContentValues();
+     /*   ContentValues values = new ContentValues();
         values.put(TableColumns.PLACE_ID, place.getId());
         values.put(TableColumns.PLACE_NAME, Utilities.convertToString(place.getName()));
         values.put(TableColumns.PLACE_ADDRESS, Utilities.convertToString(place.getAddress()));
@@ -128,6 +132,19 @@ public class FutureLocationsFragment extends Fragment implements
         values.put(TableColumns.PLACE_RATING, Utilities.convertToString(place.getRating()));
 
         getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
+       */
+
+        locationPOJO = new LocationPOJO();
+        locationPOJO.setPlace_id(place.getId());
+        locationPOJO.setPlace_name(Utilities.convertToString(place.getName()));
+        locationPOJO.setPlace_address(Utilities.convertToString(place.getAddress()));
+        locationPOJO.setPlace_phone(Utilities.convertToString(place.getPhoneNumber()));
+        locationPOJO.setPlace_website( Utilities.convertToString(place.getWebsiteUri()));
+        locationPOJO.setPlace_latitude((place.getLatLng().latitude)+"");
+        locationPOJO.setPlace_longitude(place.getLatLng().longitude+"");
+        locationPOJO.setPlace_rating(Utilities.convertToString(place.getRating()));
+
+        new saveDataAsync().execute(locationPOJO);
         Log.d("..........", "saved!!");
     }
 
@@ -206,7 +223,7 @@ public class FutureLocationsFragment extends Fragment implements
         CursorLoader cursorLoader = new CursorLoader(this.getActivity(), FUTURE_URI,
                 new String[]{ TableColumns._ID, TableColumns.PLACE_ID, TableColumns.PLACE_NAME,
                         TableColumns.PLACE_ADDRESS, TableColumns.PLACE_PHONE, TableColumns.PLACE_WEBSITE,
-                        TableColumns.PLACE_LATITUDE, TableColumns.PLACE_LONGITUDE,
+                        PLACE_LATITUDE, TableColumns.PLACE_LONGITUDE,
                         TableColumns.PLACE_RATING, TableColumns.PLACE_IMAGE},
                 null,
                 null,
@@ -225,5 +242,37 @@ public class FutureLocationsFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    class saveDataAsync extends AsyncTask{
+
+        public saveDataAsync(){
+
+        }
+        @Override
+        protected String doInBackground(Object[] objects) {
+            LocationPOJO object = (LocationPOJO) objects[0];
+            if(object!=null){
+                ContentValues values = new ContentValues();
+                values.put(TableColumns.PLACE_ID, object.getPlace_id());
+                values.put(TableColumns.PLACE_NAME, object.getPlace_name());
+                values.put(TableColumns.PLACE_ADDRESS, object.getPlace_address());
+                values.put(TableColumns.PLACE_PHONE, object.getPlace_phone());
+                values.put(TableColumns.PLACE_WEBSITE, object.getPlace_website());
+                values.put(PLACE_LATITUDE, object.getPlace_latitude());
+                values.put(TableColumns.PLACE_LONGITUDE, object.getPlace_longitude());
+                values.put(TableColumns.PLACE_RATING, object.getPlace_rating());
+
+                getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            Toast.makeText(getContext(), "Saved To db", Toast.LENGTH_LONG).show();
+        }
     }
 }

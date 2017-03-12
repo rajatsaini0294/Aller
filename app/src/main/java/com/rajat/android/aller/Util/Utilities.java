@@ -42,6 +42,29 @@ public class Utilities {
     }
 
 
+    public static File convertBitmapToJPEG(Bitmap bitmap) {
+        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
+        if (folder.exists()) {
+            Log.d("............", "folder exist:" + folder.toString());
+            String imageName = "image_"+ Utilities.getTimeStamp();
+            File file = new File(folder, imageName);
+            if(!file.exists()){
+                try {
+                    FileOutputStream out = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if(file.exists()){
+                return file;
+            }
+            return null;
+        }
+        return null;
+    }
 
     public static String getTimeStamp() {
         Long tsLong = System.currentTimeMillis()/1000;

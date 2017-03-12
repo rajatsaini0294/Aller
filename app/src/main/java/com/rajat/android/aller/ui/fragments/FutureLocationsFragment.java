@@ -252,6 +252,7 @@ public class FutureLocationsFragment extends Fragment implements
 
     class saveDataAsync extends AsyncTask{
 
+        String placeId = null;
         public saveDataAsync(){
 
         }
@@ -260,7 +261,9 @@ public class FutureLocationsFragment extends Fragment implements
             LocationPOJO object = (LocationPOJO) objects[0];
             if(object!=null){
                 ContentValues values = new ContentValues();
+                placeId = object.getPlace_id();
                 values.put(TableColumns.PLACE_ID, object.getPlace_id());
+
                 values.put(TableColumns.PLACE_NAME, object.getPlace_name());
                 values.put(TableColumns.PLACE_ADDRESS, object.getPlace_address());
                 values.put(TableColumns.PLACE_PHONE, object.getPlace_phone());
@@ -269,12 +272,7 @@ public class FutureLocationsFragment extends Fragment implements
                 values.put(TableColumns.PLACE_LONGITUDE, object.getPlace_longitude());
                 values.put(TableColumns.PLACE_RATING, object.getPlace_rating());
 
-                File file = getPlacePhoto(object.getPlace_id());
-                if(file.exists()){
-                    values.put(TableColumns.PLACE_IMAGE, file.toString());
-                }else{
-                    values.put(TableColumns.PLACE_IMAGE, (String) null);
-                }
+
 
                 getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
 
@@ -282,6 +280,38 @@ public class FutureLocationsFragment extends Fragment implements
             return null;
         }
 
+
+
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            Toast.makeText(getContext(), "Info Saved To db", Toast.LENGTH_LONG).show();
+            new savePlaceImageAsyncTask().execute(placeId);
+        }
+    }
+
+    class savePlaceImageAsyncTask extends AsyncTask{
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            String placeId = (String) objects[0];
+            ContentValues values = new ContentValues();
+            File file = getPlacePhoto(placeId);
+            if(file.exists()){
+                values.put(TableColumns.PLACE_IMAGE, file.toString());
+            }else{
+                values.put(TableColumns.PLACE_IMAGE, (String) null);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            Toast.makeText(getContext(), "Image Saved To db", Toast.LENGTH_LONG).show();
+
+        }
 
         private File getPlacePhoto(String place_id) {
             File imagePath = null;
@@ -298,12 +328,6 @@ public class FutureLocationsFragment extends Fragment implements
             }
             return imagePath;
 
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            Toast.makeText(getContext(), "Saved To db", Toast.LENGTH_LONG).show();
         }
     }
 }

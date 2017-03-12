@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -18,6 +19,9 @@ import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.TableColumns;
 import com.rajat.android.aller.model.LocationPOJO;
 import com.rajat.android.aller.ui.activities.LocationDetailsActivity;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * Created by rajat on 3/8/2017.
@@ -76,6 +80,12 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         });
 
+        File file = Utilities.getPathToImage(cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_ID)));
+        Log.d("............", ""+file);
+        if(file!=null && file.exists()) {
+            Picasso.with(context).load(file.toString()).into(gridViewHolder.imageView);
+            Log.d("............", "picasso run");
+        }
     }
 
     private Parcelable exportToParcel(int position) {
@@ -119,12 +129,14 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView textView;
         private CardView cardView;
         private RatingBar ratingBar;
+        private ImageView imageView;
 
         public GridViewHolder(View view) {
             super(view);
             textView = (TextView) view.findViewById(R.id.place_name);
             cardView = (CardView) view.findViewById(R.id.card_view);
             ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
+            imageView = (ImageView) view.findViewById(R.id.place_image);
         }
     }
 }

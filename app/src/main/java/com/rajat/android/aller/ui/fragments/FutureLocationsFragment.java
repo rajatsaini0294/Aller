@@ -4,6 +4,7 @@ package com.rajat.android.aller.ui.fragments;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
 import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.PlacePhotoResult;
@@ -40,6 +42,8 @@ import com.rajat.android.aller.adapters.GridAdapter;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
 import com.rajat.android.aller.model.LocationPOJO;
+
+import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.location.places.ui.PlacePicker.getPlace;
@@ -147,6 +151,8 @@ public class FutureLocationsFragment extends Fragment implements
         new saveDataAsync().execute(locationPOJO);
         Log.d("..........", "saved!!");
     }
+
+
 
     private ResultCallback<PlacePhotoResult> mDisplayPhotoResultCallback
             = new ResultCallback<PlacePhotoResult>() {
@@ -263,12 +269,36 @@ public class FutureLocationsFragment extends Fragment implements
                 values.put(TableColumns.PLACE_LONGITUDE, object.getPlace_longitude());
                 values.put(TableColumns.PLACE_RATING, object.getPlace_rating());
 
+                File file = getPlacePhoto(object.getPlace_id());
+                if(file.exists()){
+                    values.put(TableColumns.PLACE_IMAGE, file.toString());
+                }else{
+                    values.put(TableColumns.PLACE_IMAGE, (String) null);
+                }
+
                 getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
 
             }
             return null;
         }
 
+
+        private File getPlacePhoto(String place_id) {
+            File imagePath = null;
+            PlacePhotoMetadataResult result = Places.GeoDataApi
+                    .getPlacePhotos(mGoogleApiClient, place_id).await();
+            if (result != null && result.getStatus().isSuccess()) {
+                PlacePhotoMetadataBuffer photoMetadataBuffer = result.getPhotoMetadata();
+                PlacePhotoMetadata photo = photoMetadataBuffer.get(0);
+                Bitmap bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
+                if(bitmap != null) {
+                    imagePath = Utilities.convertBitmapToJPEG(bitmap);
+                }
+                photoMetadataBuffer.release();
+            }
+            return imagePath;
+
+        }
 
         @Override
         protected void onPostExecute(Object o) {

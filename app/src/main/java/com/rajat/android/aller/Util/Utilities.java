@@ -42,11 +42,11 @@ public class Utilities {
     }
 
 
-    public static File convertBitmapToJPEG(Bitmap bitmap) {
+    public static File convertBitmapToJPEG(Bitmap bitmap, String place_id) {
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
         if (folder.exists()) {
             Log.d("............", "folder exist:" + folder.toString());
-            String imageName = "image_"+ Utilities.getTimeStamp()+".jpg";
+            String imageName = place_id+".jpg";
             File file = new File(folder, imageName);
             if(!file.exists()){
                 try {

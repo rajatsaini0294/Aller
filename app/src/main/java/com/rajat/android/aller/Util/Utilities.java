@@ -66,9 +66,4 @@ public class Utilities {
         return null;
     }
 
-    public static String getTimeStamp() {
-        Long tsLong = System.currentTimeMillis()/1000;
-        String timestamp = tsLong.toString();
-        return timestamp;
-    }
 }

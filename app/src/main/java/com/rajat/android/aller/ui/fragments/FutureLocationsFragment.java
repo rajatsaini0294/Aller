@@ -331,7 +331,7 @@ public class FutureLocationsFragment extends Fragment implements
                     bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
                 }
                 if (bitmap != null) {
-                    imagePath = Utilities.convertBitmapToJPEG(bitmap);
+                    imagePath = Utilities.convertBitmapToJPEG(bitmap, place_id);
                 }
                 photoMetadataBuffer.release();
             }

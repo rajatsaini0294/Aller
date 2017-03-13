@@ -20,6 +20,7 @@ android {
         }
         buildTypes.each {
             it.resValue "string", "PLACES_API_KEY", MyPlacesApiKey
+            it.resValue "string", "STATIC_MAP_IMAGE_API_KEY", MyStaticMapImageAPIKey
         }
     }
 }

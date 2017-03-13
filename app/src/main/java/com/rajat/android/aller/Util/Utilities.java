@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
  */
 
 public class Utilities {
+
+
     public static String convertToString(CharSequence sequence){
         if(sequence != null){
             return sequence.toString();
@@ -70,5 +72,10 @@ public class Utilities {
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
         File imagePath = new File(folder, imageName+".jpg");
         return imagePath;
+    }
+
+    public static String getStaticMapImageURL(String latitude, String longitude){
+        String staticMapImageURL = "https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"&zoom=17&size=400x250&key=";
+        return staticMapImageURL;
     }
 }

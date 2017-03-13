@@ -330,11 +330,15 @@ public class FutureLocationsFragment extends Fragment implements
                 } catch (Exception ex) {
 
                 }
+                if(photo == null){
+                    // get photos from static maps
+                }
                 if (photo != null) {
                     bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
-                }
-                if (bitmap != null) {
-                    imagePath = Utilities.convertBitmapToJPEG(bitmap, place_id);
+                    if (bitmap != null) {
+                        imagePath = Utilities.convertBitmapToJPEG(bitmap, place_id);
+                    }
+
                 }
                 photoMetadataBuffer.release();
             }

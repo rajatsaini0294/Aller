@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -68,6 +70,7 @@ public class FutureLocationsFragment extends Fragment implements
     GridAdapter adapter;
     RecyclerView recyclerView;
     LocationPOJO locationPOJO;
+    FrameLayout frameLayout;
 
     String latitude = null;
     String longitude = null;
@@ -94,6 +97,9 @@ public class FutureLocationsFragment extends Fragment implements
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
+
+        frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout);
+
         //imageView = (ImageView) view.findViewById(R.id.image);
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -272,6 +278,7 @@ public class FutureLocationsFragment extends Fragment implements
 
         String placeId = null;
         boolean flag = false;
+
         public saveDataAsync() {
 
         }
@@ -280,7 +287,7 @@ public class FutureLocationsFragment extends Fragment implements
             if (loadedCursor.getCount() > 0) {
                 do {
                     String id = loadedCursor.getString(loadedCursor.getColumnIndex(TableColumns.PLACE_ID));
-                    if(id.equals(placeId)){
+                    if (id.equals(placeId)) {
                         Log.d(":::::::", "PLace exist");
                         return true;
                     }
@@ -298,7 +305,7 @@ public class FutureLocationsFragment extends Fragment implements
                 ContentValues values = new ContentValues();
                 placeId = object.getPlace_id();
                 flag = checkLocationExist(placeId);
-                if(!flag) {
+                if (!flag) {
                     values.put(TableColumns.PLACE_ID, placeId);
 
                     values.put(TableColumns.PLACE_NAME, object.getPlace_name());
@@ -322,8 +329,10 @@ public class FutureLocationsFragment extends Fragment implements
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            if(!flag) {
-                Toast.makeText(getContext(), "Info Saved To db", Toast.LENGTH_LONG).show();
+            if (flag) {
+                Snackbar.make(frameLayout, "Location already exist", Snackbar.LENGTH_LONG).show();
+            } else {
+                Snackbar.make(frameLayout, "Location saved", Snackbar.LENGTH_LONG).show();
                 new savePlaceImageAsyncTask().execute(placeId);
             }
         }

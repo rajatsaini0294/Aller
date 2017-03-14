@@ -284,7 +284,7 @@ public class FutureLocationsFragment extends Fragment implements
         }
 
         private boolean checkLocationExist(String placeId) {
-            if (loadedCursor.getCount() > 0) {
+            if (loadedCursor != null &&loadedCursor.getCount() > 0) {
                 do {
                     String id = loadedCursor.getString(loadedCursor.getColumnIndex(TableColumns.PLACE_ID));
                     if (id.equals(placeId)) {

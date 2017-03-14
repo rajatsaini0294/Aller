@@ -3,6 +3,7 @@ package com.rajat.android.aller.ui.fragments;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -75,6 +76,7 @@ public class FutureLocationsFragment extends Fragment implements
     String latitude = null;
     String longitude = null;
     Bitmap VolleyBitmap;
+    RecyclerView.LayoutManager layoutManager;
 
     Cursor loadedCursor = null;
 
@@ -102,7 +104,12 @@ public class FutureLocationsFragment extends Fragment implements
 
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager = new GridLayoutManager(getContext(), 3);
+        }else{
+            layoutManager = new GridLayoutManager(getContext(), 2);
+        }
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new GridAdapter(getContext(), Constants.FRAGMENT_TOVISIT);

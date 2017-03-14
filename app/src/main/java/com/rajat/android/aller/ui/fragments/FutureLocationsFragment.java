@@ -61,6 +61,8 @@ import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
 public class FutureLocationsFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
+
+    final int fragment = 200;
     FloatingActionButton floatingActionButton;
     int PLACE_PICKER_REQUEST = 1;
     ImageView imageView;
@@ -103,7 +105,7 @@ public class FutureLocationsFragment extends Fragment implements
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new GridAdapter(getContext());
+        adapter = new GridAdapter(getContext(), fragment);
         recyclerView.setAdapter(adapter);
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);

@@ -30,8 +30,9 @@ import java.io.File;
 public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     Cursor cursor = null;
+    int fragment;
     final private String PARCEL_KEY = "parcelKey";
-
+    String FRAGMENT_KEY = "FRAGMENT";
     public GridAdapter(Context context) {
         this.context = context;
     }
@@ -40,7 +41,10 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
         this.cursor = cursor;
     }
-
+    public GridAdapter(Context context, int fragment) {
+        this.context = context;
+        this.fragment = fragment;
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.grid_item_layout, viewGroup, false);
@@ -68,6 +72,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     if (parcelable != null) {
                         Intent intent = new Intent(context, LocationDetailsActivity.class);
                         intent.putExtra(PARCEL_KEY, parcelable);
+                        intent.putExtra(FRAGMENT_KEY, fragment);
                         context.startActivity(intent);
                     }
                 }

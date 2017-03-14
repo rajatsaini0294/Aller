@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,10 +41,13 @@ public class LocationDetailsActivity extends AppCompatActivity {
     TextView placeAddressTextView;
     ImageView imageView;
     CoordinatorLayout coordinatorLayout;
+
+    int fragment_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationPOJO = getIntent().getParcelableExtra(PARCEL_KEY);
+        fragment_id = getIntent().getIntExtra("FRAGMENT",0);
         setContentView(R.layout.activity_location_details);
 
         placeNameTextView = (TextView) findViewById(R.id.place_name);
@@ -108,8 +110,13 @@ public class LocationDetailsActivity extends AppCompatActivity {
     }
 
     private void deleteLocation() {
+
         String args[] = {placeId};
-        getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID+"=?", args);
+        if(fragment_id == 100) {
+            getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
+        }else if(fragment_id == 200){
+            getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
+        }
         deleteImage();
         Snackbar.make(coordinatorLayout, "Location removed", Snackbar.LENGTH_LONG).show();
 

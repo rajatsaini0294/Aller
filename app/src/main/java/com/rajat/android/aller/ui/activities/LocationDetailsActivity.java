@@ -103,8 +103,6 @@ public class LocationDetailsActivity extends AppCompatActivity {
             case R.id.remove:
                 Log.d("=============","clicked removed");
                 deleteLocation();
-            case R.id.add:
-                // set as visited;
             default:
                 return super.onOptionsItemSelected(item);
         }

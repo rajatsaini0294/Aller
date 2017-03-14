@@ -4,8 +4,4 @@
         android:id="@+id/remove"
         android:title="Remove"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/add"
-        android:title="Set as visited"
-        app:showAsAction="never" />
 </menu>

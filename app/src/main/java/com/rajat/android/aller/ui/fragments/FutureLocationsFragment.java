@@ -42,6 +42,7 @@ import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Constants;
 import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.adapters.GridAdapter;
 import com.rajat.android.aller.data.DataProvider;
@@ -62,7 +63,6 @@ public class FutureLocationsFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
 
-    final int fragment = 200;
     FloatingActionButton floatingActionButton;
     int PLACE_PICKER_REQUEST = 1;
     ImageView imageView;
@@ -86,7 +86,7 @@ public class FutureLocationsFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().getSupportLoaderManager().initLoader(1, null, this);
+        getActivity().getSupportLoaderManager().initLoader(Constants.CURSOR_LOADER_FUTURE_FRAGMENT, null, this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -105,7 +105,7 @@ public class FutureLocationsFragment extends Fragment implements
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new GridAdapter(getContext(), fragment);
+        adapter = new GridAdapter(getContext(), Constants.FRAGMENT_TOVISIT);
         recyclerView.setAdapter(adapter);
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_add);

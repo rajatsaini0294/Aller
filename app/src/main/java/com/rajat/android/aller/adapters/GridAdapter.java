@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Constants;
 import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.TableColumns;
 import com.rajat.android.aller.model.LocationPOJO;
@@ -22,6 +23,7 @@ import com.rajat.android.aller.ui.activities.LocationDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+
 
 /**
  * Created by rajat on 3/8/2017.
@@ -32,7 +34,6 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Cursor cursor = null;
     int fragment;
     final private String PARCEL_KEY = "parcelKey";
-    String FRAGMENT_KEY = "FRAGMENT";
     public GridAdapter(Context context) {
         this.context = context;
     }
@@ -72,7 +73,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     if (parcelable != null) {
                         Intent intent = new Intent(context, LocationDetailsActivity.class);
                         intent.putExtra(PARCEL_KEY, parcelable);
-                        intent.putExtra(FRAGMENT_KEY, fragment);
+                        intent.putExtra(Constants.FRAGMENT_KEY, fragment);
                         context.startActivity(intent);
                     }
                 }

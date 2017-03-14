@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Constants;
 import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
@@ -112,9 +113,9 @@ public class LocationDetailsActivity extends AppCompatActivity {
     private void deleteLocation() {
 
         String args[] = {placeId};
-        if(fragment_id == 100) {
+        if(fragment_id == Constants.FRAGMENT_VISITED) {
             getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-        }else if(fragment_id == 200){
+        }else if(fragment_id == Constants.FRAGMENT_TOVISIT){
             getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
         }
         deleteImage();

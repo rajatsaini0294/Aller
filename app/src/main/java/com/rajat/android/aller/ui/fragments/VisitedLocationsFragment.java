@@ -259,7 +259,7 @@ public class VisitedLocationsFragment extends Fragment
                 new String[]{TableColumns._ID, TableColumns.PLACE_ID, TableColumns.PLACE_NAME,
                         TableColumns.PLACE_ADDRESS, TableColumns.PLACE_PHONE, TableColumns.PLACE_WEBSITE,
                         PLACE_LATITUDE, TableColumns.PLACE_LONGITUDE,
-                        TableColumns.PLACE_RATING, TableColumns.PLACE_IMAGE},
+                        TableColumns.PLACE_RATING},
                 null,
                 null,
                 null);

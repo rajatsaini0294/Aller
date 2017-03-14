@@ -22,6 +22,4 @@ public interface TableColumns {
     @DataType(TEXT) @NotNull String PLACE_LATITUDE = "place_latitude";
     @DataType(TEXT) @NotNull String PLACE_LONGITUDE = "place_longitude";
     @DataType(TEXT) String PLACE_RATING = "place_rating";
-    @DataType(TEXT) String PLACE_IMAGE = "place_image";
-
 }

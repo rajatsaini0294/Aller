@@ -18,13 +18,8 @@ public class LocationPOJO implements Parcelable {
     public String place_latitude;
     public String place_longitude;
     public String place_rating;
-    public String place_image;
 
     public LocationPOJO() {
-    }
-
-    public String getPlace_image() {
-        return place_image;
     }
 
     public String getPlace_rating() {
@@ -99,10 +94,6 @@ public class LocationPOJO implements Parcelable {
         this.place_rating = place_rating;
     }
 
-    public void setPlace_image(String place_image) {
-        this.place_image = place_image;
-    }
-
     protected LocationPOJO(Parcel in) {
         _id = in.readString();
         place_id = in.readString();
@@ -113,7 +104,6 @@ public class LocationPOJO implements Parcelable {
         place_latitude = in.readString();
         place_longitude = in.readString();
         place_rating = in.readString();
-        //place_image = in.readByteArray();
 
     }
 
@@ -145,6 +135,5 @@ public class LocationPOJO implements Parcelable {
         parcel.writeString(place_latitude);
         parcel.writeString(place_longitude);
         parcel.writeString(place_rating);
-        //parcel.writeString(_id);
     }
 }

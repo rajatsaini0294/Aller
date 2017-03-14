@@ -73,6 +73,8 @@ public class FutureLocationsFragment extends Fragment implements
     String longitude = null;
     Bitmap VolleyBitmap;
 
+    Cursor loadedCursor = null;
+
     public FutureLocationsFragment() {
         // Required empty public constructor
     }
@@ -255,6 +257,7 @@ public class FutureLocationsFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
+        loadedCursor = cursor;
         adapter.setCursor(cursor);
         adapter.notifyDataSetChanged();
         Log.d("............", "adapter set");
@@ -268,9 +271,24 @@ public class FutureLocationsFragment extends Fragment implements
     class saveDataAsync extends AsyncTask {
 
         String placeId = null;
-
+        boolean flag = false;
         public saveDataAsync() {
 
+        }
+
+        private boolean checkLocationExist(String placeId) {
+            if (loadedCursor.getCount() > 0) {
+                do {
+                    String id = loadedCursor.getString(loadedCursor.getColumnIndex(TableColumns.PLACE_ID));
+                    if(id.equals(placeId)){
+                        Log.d(":::::::", "PLace exist");
+                        return true;
+                    }
+                } while (loadedCursor.moveToNext());
+            } else {
+                Log.d("Cursor Error:", "LoadedCursor is null");
+            }
+            return false;
         }
 
         @Override
@@ -279,20 +297,23 @@ public class FutureLocationsFragment extends Fragment implements
             if (object != null) {
                 ContentValues values = new ContentValues();
                 placeId = object.getPlace_id();
-                values.put(TableColumns.PLACE_ID, object.getPlace_id());
+                flag = checkLocationExist(placeId);
+                if(!flag) {
+                    values.put(TableColumns.PLACE_ID, placeId);
 
-                values.put(TableColumns.PLACE_NAME, object.getPlace_name());
-                values.put(TableColumns.PLACE_ADDRESS, object.getPlace_address());
-                values.put(TableColumns.PLACE_PHONE, object.getPlace_phone());
-                values.put(TableColumns.PLACE_WEBSITE, object.getPlace_website());
-                values.put(PLACE_LATITUDE, object.getPlace_latitude());
-                values.put(TableColumns.PLACE_LONGITUDE, object.getPlace_longitude());
-                values.put(TableColumns.PLACE_RATING, object.getPlace_rating());
+                    values.put(TableColumns.PLACE_NAME, object.getPlace_name());
+                    values.put(TableColumns.PLACE_ADDRESS, object.getPlace_address());
+                    values.put(TableColumns.PLACE_PHONE, object.getPlace_phone());
+                    values.put(TableColumns.PLACE_WEBSITE, object.getPlace_website());
+                    values.put(PLACE_LATITUDE, object.getPlace_latitude());
+                    values.put(TableColumns.PLACE_LONGITUDE, object.getPlace_longitude());
+                    values.put(TableColumns.PLACE_RATING, object.getPlace_rating());
 
 
-                getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
-                longitude = object.getPlace_longitude();
-                latitude = object.getPlace_latitude();
+                    getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
+                    longitude = object.getPlace_longitude();
+                    latitude = object.getPlace_latitude();
+                }
             }
             return null;
         }
@@ -301,14 +322,17 @@ public class FutureLocationsFragment extends Fragment implements
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            Toast.makeText(getContext(), "Info Saved To db", Toast.LENGTH_LONG).show();
-            new savePlaceImageAsyncTask().execute(placeId);
+            if(!flag) {
+                Toast.makeText(getContext(), "Info Saved To db", Toast.LENGTH_LONG).show();
+                new savePlaceImageAsyncTask().execute(placeId);
+            }
         }
     }
 
     class savePlaceImageAsyncTask extends AsyncTask {
         boolean flag = false;
         String placeId = null;
+
         @Override
         protected Object doInBackground(Object[] objects) {
             placeId = (String) objects[0];
@@ -336,7 +360,7 @@ public class FutureLocationsFragment extends Fragment implements
                 RequestQueue rq = Volley.newRequestQueue(getContext());
                 ImageRequest ir = null;
                 if (latitude != null && longitude != null) {
-                    String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"&style=feature:all&size=400x400&markers=color:red|"+latitude+","+longitude+"&key="+getResources().getString(R.string.STATIC_MAP_IMAGE_API_KEY);
+                    String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&style=feature:all&size=400x400&markers=color:red|" + latitude + "," + longitude + "&key=" + getResources().getString(R.string.STATIC_MAP_IMAGE_API_KEY);
                     ir = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {

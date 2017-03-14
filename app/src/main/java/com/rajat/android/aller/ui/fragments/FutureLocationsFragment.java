@@ -24,6 +24,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -47,6 +52,7 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.location.places.ui.PlacePicker.getPlace;
+import static com.rajat.android.aller.Util.Utilities.convertBitmapToJPEG;
 import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
 
 /**
@@ -62,6 +68,10 @@ public class FutureLocationsFragment extends Fragment implements
     GridAdapter adapter;
     RecyclerView recyclerView;
     LocationPOJO locationPOJO;
+
+    String latitude = null;
+    String longitude = null;
+    Bitmap VolleyBitmap;
 
     public FutureLocationsFragment() {
         // Required empty public constructor
@@ -152,6 +162,9 @@ public class FutureLocationsFragment extends Fragment implements
 
         new saveDataAsync().execute(locationPOJO);
         Log.d("..........", "saved!!");
+
+        latitude = (place.getLatLng().latitude) + "";
+        longitude = (place.getLatLng().longitude) + "";
     }
 
 
@@ -278,7 +291,8 @@ public class FutureLocationsFragment extends Fragment implements
 
 
                 getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
-
+                longitude = object.getPlace_longitude();
+                latitude = object.getPlace_latitude();
             }
             return null;
         }
@@ -293,18 +307,21 @@ public class FutureLocationsFragment extends Fragment implements
     }
 
     class savePlaceImageAsyncTask extends AsyncTask {
-
+        boolean flag = false;
+        String placeId = null;
         @Override
         protected Object doInBackground(Object[] objects) {
-            String placeId = (String) objects[0];
+            placeId = (String) objects[0];
             ContentValues values = new ContentValues();
             File file = getPlacePhoto(placeId);
             if (file != null) {
                 if (file.exists()) {
-                    values.put(TableColumns.PLACE_IMAGE, file.toString());
+                    // values.put(TableColumns.PLACE_IMAGE, file.toString());
+                    flag = true;
                 }
             } else {
-                values.put(TableColumns.PLACE_IMAGE, (String) null);
+                //  values.put(TableColumns.PLACE_IMAGE, (String) null);
+                Log.d("==========", "null put in column");
             }
             return null;
         }
@@ -315,6 +332,26 @@ public class FutureLocationsFragment extends Fragment implements
             Toast.makeText(getContext(), "Image Saved To db", Toast.LENGTH_LONG).show();
             Log.d("............", "image saved to store");
             adapter.notifyDataSetChanged();
+            if (!flag) {
+                RequestQueue rq = Volley.newRequestQueue(getContext());
+                ImageRequest ir = null;
+                if (latitude != null && longitude != null) {
+                    String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"&style=feature:all&size=400x400&markers=color:red|"+latitude+","+longitude+"&key="+getResources().getString(R.string.STATIC_MAP_IMAGE_API_KEY);
+                    ir = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap response) {
+                            File file = Utilities.convertBitmapToJPEG(response, placeId);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }, 0, 0, null, null, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("========", "error volley");
+                        }
+                    });
+                }
+                rq.add(ir);
+            }
         }
 
         private File getPlacePhoto(String place_id) {
@@ -330,20 +367,25 @@ public class FutureLocationsFragment extends Fragment implements
                 } catch (Exception ex) {
 
                 }
-                if(photo == null){
-                    // get photos from static maps
-                }
                 if (photo != null) {
                     bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
+                    Log.d("....................", "phto not null");
+
                     if (bitmap != null) {
-                        imagePath = Utilities.convertBitmapToJPEG(bitmap, place_id);
+                        imagePath = convertBitmapToJPEG(bitmap, place_id);
+                        Log.d("....................", "bitmpa not null");
                     }
 
+                } else {
+                    // get photos from static maps
                 }
+
                 photoMetadataBuffer.release();
             }
             return imagePath;
 
         }
+
+
     }
 }

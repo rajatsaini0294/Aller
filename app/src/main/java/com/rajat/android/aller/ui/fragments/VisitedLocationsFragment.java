@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -62,6 +63,7 @@ import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
  */
 public class VisitedLocationsFragment extends Fragment
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<Cursor>{
+    Parcelable savedStateParcelable = null;
 
     FloatingActionButton floatingActionButton;
     int PLACE_PICKER_REQUEST = 1;
@@ -86,6 +88,7 @@ public class VisitedLocationsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)  {
+
 
         getActivity().getSupportLoaderManager().initLoader(Constants.CURSOR_LOADER_VISITED_FRAGMENT, null, this);
 
@@ -364,7 +367,32 @@ public class VisitedLocationsFragment extends Fragment
             return imagePath;
 
         }
+    }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.RECYCLER_VIEW_STATE, layoutManager.onSaveInstanceState());
+        Log.d("...........","on saveinstance");
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState !=null){
+            savedStateParcelable = savedInstanceState.getParcelable(Constants.RECYCLER_VIEW_STATE);
+        }
+        Log.d("...........","on restore instance");
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(savedStateParcelable != null){
+            layoutManager.onRestoreInstanceState(savedStateParcelable);
+        }
+        Log.d("...........","on resume instance");
     }
 }

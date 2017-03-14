@@ -10,5 +10,6 @@ public class Constants {
     public static final int FRAGMENT_VISITED = 100;
     public static final int FRAGMENT_TOVISIT = 200;
     public static final String FRAGMENT_KEY = "FRAGMENT";
+    public static final String RECYCLER_VIEW_STATE = "GRID_POSITION";
 
 }

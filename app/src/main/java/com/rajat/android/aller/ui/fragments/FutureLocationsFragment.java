@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -63,7 +64,7 @@ import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
 public class FutureLocationsFragment extends Fragment implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
-
+    Parcelable savedStateParcelable = null;
     FloatingActionButton floatingActionButton;
     int PLACE_PICKER_REQUEST = 1;
     ImageView imageView;
@@ -87,9 +88,8 @@ public class FutureLocationsFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
         getActivity().getSupportLoaderManager().initLoader(Constants.CURSOR_LOADER_FUTURE_FRAGMENT, null, this);
-
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -98,7 +98,6 @@ public class FutureLocationsFragment extends Fragment implements
                 .build();
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
 
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout);
 
@@ -107,7 +106,7 @@ public class FutureLocationsFragment extends Fragment implements
 
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             layoutManager = new GridLayoutManager(getContext(), 3);
-        }else{
+        } else {
             layoutManager = new GridLayoutManager(getContext(), 2);
         }
         recyclerView.setLayoutManager(layoutManager);
@@ -122,6 +121,7 @@ public class FutureLocationsFragment extends Fragment implements
                 startPlacePicker();
             }
         });
+
         return view;
     }
 
@@ -234,7 +234,7 @@ public class FutureLocationsFragment extends Fragment implements
         }
 
         private boolean checkLocationExist(String placeId) {
-            if (loadedCursor != null &&loadedCursor.getCount() > 0) {
+            if (loadedCursor != null && loadedCursor.getCount() > 0) {
                 do {
                     String id = loadedCursor.getString(loadedCursor.getColumnIndex(TableColumns.PLACE_ID));
                     if (id.equals(placeId)) {
@@ -359,7 +359,31 @@ public class FutureLocationsFragment extends Fragment implements
             return imagePath;
 
         }
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.RECYCLER_VIEW_STATE, layoutManager.onSaveInstanceState());
+        Log.d("...........", "on saveinstance");
+    }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            savedStateParcelable = savedInstanceState.getParcelable(Constants.RECYCLER_VIEW_STATE);
+        }
+        Log.d("...........", "on restore instance");
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (savedStateParcelable != null) {
+            layoutManager.onRestoreInstanceState(savedStateParcelable);
+        }
+        Log.d("...........", "on resume instance");
     }
 }

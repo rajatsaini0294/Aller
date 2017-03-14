@@ -24,13 +24,11 @@
 
             <ImageView
                 android:id="@+id/place_image"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/detail_image_desc"
-                android:paddingBottom="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/gallery" />
+                android:paddingBottom="16dp" />
 
             <TextView
                 android:id="@+id/place_name"

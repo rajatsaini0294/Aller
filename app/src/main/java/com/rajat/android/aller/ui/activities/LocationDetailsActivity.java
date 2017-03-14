@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.rajat.android.aller.R;
 import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.model.LocationPOJO;
+import com.squareup.picasso.Picasso;
 
 public class LocationDetailsActivity extends AppCompatActivity {
     final private String PARCEL_KEY = "parcelKey";
@@ -24,10 +25,12 @@ public class LocationDetailsActivity extends AppCompatActivity {
     String placeName;
     String placeAddress;
     String placeRating;
+    String placeId;
 
     CardView cardView;
     ImageView placeImage;
     TextView placeAddressTextView;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,11 @@ public class LocationDetailsActivity extends AppCompatActivity {
         placeImage = (ImageView) findViewById(R.id.place_image);
         placeAddressTextView = (TextView) findViewById(R.id.place_address);
         ratingBar = (RatingBar) findViewById(R.id.rating_bar);
+        imageView = (ImageView) findViewById(R.id.place_image);
+
+        placeId = locationPOJO.getPlace_id();
+        Picasso.with(this).load(Utilities.getPathToImage(placeId)).into(imageView);
+
 
         placeName = locationPOJO.getPlace_name();
         placeNameTextView.setText(placeName);

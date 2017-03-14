@@ -304,7 +304,7 @@ public class FutureLocationsFragment extends Fragment implements
                 RequestQueue rq = Volley.newRequestQueue(getContext());
                 ImageRequest ir = null;
                 if (latitude != null && longitude != null) {
-                    String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&style=feature:all&size=400x400&markers=color:red|" + latitude + "," + longitude + "&key=" + getResources().getString(R.string.STATIC_MAP_IMAGE_API_KEY);
+                    String imageUrl = Utilities.getStaticMapImageURL(latitude, longitude, getResources().getString(R.string.STATIC_MAP_IMAGE_API_KEY));
                     ir = new ImageRequest(imageUrl, new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap response) {

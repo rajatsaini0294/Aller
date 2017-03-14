@@ -75,7 +75,7 @@ public class Utilities {
     }
 
     public static String getStaticMapImageURL(String latitude, String longitude, String key){
-        String staticMapImageURL = "https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"&zoom=17&size=400x250&key="+key;
+        String staticMapImageURL = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&style=feature:all&size=400x400&markers=color:red|" + latitude + "," + longitude + "&key=" + key;
         return staticMapImageURL;
     }
 }

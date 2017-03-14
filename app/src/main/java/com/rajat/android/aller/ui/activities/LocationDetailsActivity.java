@@ -101,7 +101,6 @@ public class LocationDetailsActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.remove:
-                Log.d("=============","clicked removed");
                 deleteLocation();
             default:
                 return super.onOptionsItemSelected(item);

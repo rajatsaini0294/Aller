@@ -52,31 +52,20 @@ public class MainActivity extends AppCompatActivity {
             Log.d("myAppName", "Error: external storage is read only.");
             return 0;
         }
-        Log.d("myAppName", "External storage is not read only or unavailable");
 
         if (ContextCompat.checkSelfPermission(this, // request permission when it is not granted.
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             Log.d("myAppName", "permission:WRITE_EXTERNAL_STORAGE: NOT granted!");
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
             } else {
-
-                // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         }
 
@@ -88,21 +77,20 @@ public class MainActivity extends AppCompatActivity {
             Log.d("myAppName", "Error: external storage is read only.");
             return 0;
         }
-        // Log.d("myAppName", "External storage is not read only or unavailable");
 
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
         int result = 0;
         if (folder.exists()) {
             Log.d("myAppName", "folder exist:" + folder.toString());
-            result = 2; // folder exist
+            result = 2;
         } else {
             try {
                 if (folder.mkdir()) {
                     Log.d("myAppName", "folder created:" + folder.toString());
-                    result = 1; // folder created
+                    result = 1;
                 } else {
                     Log.d("myAppName", "creat folder fails:" + folder.toString());
-                    result = 0; // creat folder fails
+                    result = 0;
                 }
             } catch (Exception ecp) {
                 ecp.printStackTrace();
@@ -116,19 +104,16 @@ public class MainActivity extends AppCompatActivity {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
                     if (folder.exists()) {
-                        Log.d("............", "folder exist:" + folder.toString());
+
                     } else {
                         try {
                             if (folder.mkdir()) {
-                                Log.d("................", "folder created:" + folder.toString());
-                            } else {
-                                Log.d("..................", "creat folder fails:" + folder.toString());
+                                Log.d("................", "folder created");
                             }
                         } catch (Exception ecp) {
                             ecp.printStackTrace();

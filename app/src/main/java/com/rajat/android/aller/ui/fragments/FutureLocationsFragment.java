@@ -35,12 +35,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
 import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResult;
-import com.google.android.gms.location.places.PlacePhotoResult;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.rajat.android.aller.R;
@@ -100,7 +98,6 @@ public class FutureLocationsFragment extends Fragment implements
 
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout);
 
-        //imageView = (ImageView) view.findViewById(R.id.image);
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
@@ -134,10 +131,6 @@ public class FutureLocationsFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                //Place place = getPlace(data, getContext());
-                // String toastMsg = String.format("Place: %s", place.getId());
-                // Toast.makeText(getContext(), toastMsg, Toast.LENGTH_LONG).show();
-                //placePhotosAsync(place.getId());
                 saveToDb(data);
             }
         }
@@ -145,18 +138,6 @@ public class FutureLocationsFragment extends Fragment implements
 
     private void saveToDb(Intent data) {
         Place place = getPlace(getContext(), data);
-     /*   ContentValues values = new ContentValues();
-        values.put(TableColumns.PLACE_ID, place.getId());
-        values.put(TableColumns.PLACE_NAME, Utilities.convertToString(place.getName()));
-        values.put(TableColumns.PLACE_ADDRESS, Utilities.convertToString(place.getAddress()));
-        values.put(TableColumns.PLACE_PHONE, Utilities.convertToString(place.getPhoneNumber()));
-        values.put(TableColumns.PLACE_WEBSITE, Utilities.convertToString(place.getWebsiteUri()));
-        values.put(PLACE_LATITUDE, place.getLatLng().latitude);
-        values.put(TableColumns.PLACE_LONGITUDE, place.getLatLng().longitude);
-        values.put(TableColumns.PLACE_RATING, Utilities.convertToString(place.getRating()));
-
-        getContext().getContentResolver().insert(DataProvider.ToVisit.CONTENT_URI, values);
-       */
 
         locationPOJO = new LocationPOJO();
         locationPOJO.setPlace_id(place.getId());
@@ -175,45 +156,6 @@ public class FutureLocationsFragment extends Fragment implements
         longitude = (place.getLatLng().longitude) + "";
     }
 
-
-    private ResultCallback<PlacePhotoResult> mDisplayPhotoResultCallback
-            = new ResultCallback<PlacePhotoResult>() {
-        @Override
-        public void onResult(PlacePhotoResult placePhotoResult) {
-            if (!placePhotoResult.getStatus().isSuccess()) {
-                return;
-            }
-            //imageView.setImageBitmap(placePhotoResult.getBitmap());
-        }
-    };
-
-    /**
-     * Load a bitmap from the photos API asynchronously
-     * by using buffers and result callbacks.
-     */
-    private void placePhotosAsync(String placeId) {
-        Places.GeoDataApi.getPlacePhotos(mGoogleApiClient, placeId)
-                .setResultCallback(new ResultCallback<PlacePhotoMetadataResult>() {
-
-
-                    @Override
-                    public void onResult(PlacePhotoMetadataResult photos) {
-                        if (!photos.getStatus().isSuccess()) {
-                            return;
-                        }
-
-                        PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
-                        if (photoMetadataBuffer.getCount() > 0) {
-                            // Display the first bitmap in an ImageView in the size of the view
-                            photoMetadataBuffer.get(0)
-                                    .getScaledPhoto(mGoogleApiClient, imageView.getWidth(),
-                                            imageView.getHeight())
-                                    .setResultCallback(mDisplayPhotoResultCallback);
-                        }
-                        photoMetadataBuffer.release();
-                    }
-                });
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -266,7 +208,6 @@ public class FutureLocationsFragment extends Fragment implements
         loadedCursor = cursor;
         adapter.setCursor(cursor);
         adapter.notifyDataSetChanged();
-        Log.d("............", "adapter set");
     }
 
     @Override
@@ -288,7 +229,6 @@ public class FutureLocationsFragment extends Fragment implements
                 do {
                     String id = loadedCursor.getString(loadedCursor.getColumnIndex(TableColumns.PLACE_ID));
                     if (id.equals(placeId)) {
-                        Log.d(":::::::", "PLace exist");
                         return true;
                     }
                 } while (loadedCursor.moveToNext());
@@ -349,12 +289,8 @@ public class FutureLocationsFragment extends Fragment implements
             File file = getPlacePhoto(placeId);
             if (file != null) {
                 if (file.exists()) {
-                    // values.put(TableColumns.PLACE_IMAGE, file.toString());
                     flag = true;
                 }
-            } else {
-                //  values.put(TableColumns.PLACE_IMAGE, (String) null);
-                Log.d("==========", "null put in column");
             }
             return null;
         }
@@ -363,7 +299,6 @@ public class FutureLocationsFragment extends Fragment implements
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             Toast.makeText(getContext(), "Image Saved To db", Toast.LENGTH_LONG).show();
-            Log.d("............", "image saved to store");
             adapter.notifyDataSetChanged();
             if (!flag) {
                 RequestQueue rq = Volley.newRequestQueue(getContext());
@@ -379,7 +314,7 @@ public class FutureLocationsFragment extends Fragment implements
                     }, 0, 0, null, null, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.d("========", "error volley");
+                            Log.d("Error:", "Error volley");
                         }
                     });
                 }
@@ -409,10 +344,7 @@ public class FutureLocationsFragment extends Fragment implements
                         Log.d("....................", "bitmpa not null");
                     }
 
-                } else {
-                    // get photos from static maps
                 }
-
                 photoMetadataBuffer.release();
             }
             return imagePath;

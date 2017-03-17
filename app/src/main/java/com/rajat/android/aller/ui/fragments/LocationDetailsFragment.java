@@ -2,14 +2,16 @@ package com.rajat.android.aller.ui.fragments;
 
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -43,10 +45,9 @@ public class LocationDetailsFragment extends Fragment {
     ImageView placeImage;
     TextView placeAddressTextView;
     ImageView imageView;
-    CoordinatorLayout coordinatorLayout;
-
+    FloatingActionButton floatingActionButton;
     int fragment_id;
-
+LinearLayout mLinearLayout;
     public LocationDetailsFragment() {
         // Required empty public constructor
     }
@@ -68,7 +69,9 @@ public class LocationDetailsFragment extends Fragment {
         placeAddressTextView = (TextView) view.findViewById(R.id.place_address);
         ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
         imageView = (ImageView) view.findViewById(R.id.place_image);
-        coordinatorLayout = (CoordinatorLayout) view.findViewById(R.id.coordinaterLayout);
+        mLinearLayout = (LinearLayout) view.findViewById(R.id.linear_layout_component);
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_remove);
+
 
         placeId = locationPOJO.getPlace_id();
         Picasso.with(getContext()).load(Utilities.getPathToImage(placeId)).into(imageView);
@@ -87,6 +90,12 @@ public class LocationDetailsFragment extends Fragment {
         placeRating = locationPOJO.getPlace_rating();
         ratingBar.setRating(Utilities.parseRating(placeRating));
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteLocation();
+            }
+        });
         return view;
     }
 
@@ -102,13 +111,20 @@ public class LocationDetailsFragment extends Fragment {
 
         String args[] = {placeId};
         if (fragment_id == Constants.FRAGMENT_VISITED) {
-            getContext().getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
+            try {
+                getContext().getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
+            }catch (Exception ex){
+                Log.d("Database Error", "Delete Error");
+            }
         } else if (fragment_id == Constants.FRAGMENT_TOVISIT) {
-            getContext().getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
+            try {
+                getContext().getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
+            }catch (Exception ex){
+                Log.d("Database Error", "Delete Error");
+            }
         }
         deleteImage();
-        Snackbar.make(coordinatorLayout, "Location removed", Snackbar.LENGTH_LONG).show();
-
+        Snackbar.make(mLinearLayout, "Location removed", Snackbar.LENGTH_LONG).show();
     }
 
     private void deleteImage() {

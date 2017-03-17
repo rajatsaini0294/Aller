@@ -3,6 +3,7 @@ package com.rajat.android.aller.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -72,8 +73,12 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Parcelable parcelable = exportToParcel(position);
                     if (parcelable != null) {
                         Intent intent = new Intent(context, LocationDetailsActivity.class);
-                        intent.putExtra(PARCEL_KEY, parcelable);
-                        intent.putExtra(Constants.FRAGMENT_KEY, fragment);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(PARCEL_KEY, parcelable);
+                        //intent.putExtra(PARCEL_KEY, parcelable);
+                        //intent.putExtra(Constants.FRAGMENT_KEY, fragment);
+                        bundle.putInt(Constants.FRAGMENT_KEY, fragment);
+                        intent.putExtras(bundle);
                         context.startActivity(intent);
                     }
                 }

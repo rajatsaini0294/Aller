@@ -85,10 +85,12 @@ public class FutureLocationsFragment extends Fragment implements
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
+
         getActivity().getSupportLoaderManager().initLoader(Constants.CURSOR_LOADER_FUTURE_FRAGMENT, null, this);
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -207,7 +209,7 @@ public class FutureLocationsFragment extends Fragment implements
                 null,
                 null,
                 null);
-
+        Log.d("...............", "loader created");
         return cursorLoader;
     }
 
@@ -217,6 +219,8 @@ public class FutureLocationsFragment extends Fragment implements
         loadedCursor = cursor;
         adapter.setCursor(cursor);
         adapter.notifyDataSetChanged();
+        Log.d("...............", "loader finished");
+
     }
 
     @Override

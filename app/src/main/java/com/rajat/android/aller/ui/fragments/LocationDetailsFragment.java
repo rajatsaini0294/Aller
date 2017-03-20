@@ -21,6 +21,7 @@ import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
 import com.rajat.android.aller.model.LocationPOJO;
+import com.rajat.android.aller.ui.widget.BezelImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -42,7 +43,7 @@ public class LocationDetailsFragment extends Fragment {
     String placeId;
 
     CardView cardView;
-    ImageView placeImage;
+    BezelImageView placeImage;
     TextView placeAddressTextView;
     ImageView imageView;
     FloatingActionButton floatingActionButton;
@@ -65,7 +66,7 @@ LinearLayout mLinearLayout;
 
         placeNameTextView = (TextView) view.findViewById(R.id.place_name);
         cardView = (CardView) view.findViewById(R.id.card_view);
-        placeImage = (ImageView) view.findViewById(R.id.place_image);
+        placeImage = (BezelImageView) view.findViewById(R.id.place_image);
         placeAddressTextView = (TextView) view.findViewById(R.id.place_address);
         ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
         imageView = (ImageView) view.findViewById(R.id.place_image);

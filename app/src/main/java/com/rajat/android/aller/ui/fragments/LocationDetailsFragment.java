@@ -35,12 +35,16 @@ public class LocationDetailsFragment extends Fragment {
 
     LocationPOJO locationPOJO;
     TextView placeNameTextView;
+    TextView placePhoneView;
+    TextView placeWesiteView;
     RatingBar ratingBar;
 
     String placeName;
     String placeAddress;
     String placeRating;
     String placeId;
+    String placeWebsite;
+    String placePhone;
 
     CardView cardView;
     BezelImageView placeImage;
@@ -48,7 +52,8 @@ public class LocationDetailsFragment extends Fragment {
     ImageView imageView;
     FloatingActionButton floatingActionButton;
     int fragment_id;
-LinearLayout mLinearLayout;
+    LinearLayout mLinearLayout;
+
     public LocationDetailsFragment() {
         // Required empty public constructor
     }
@@ -72,7 +77,8 @@ LinearLayout mLinearLayout;
         imageView = (ImageView) view.findViewById(R.id.place_image);
         mLinearLayout = (LinearLayout) view.findViewById(R.id.linear_layout_component);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_remove);
-
+        placePhoneView = (TextView) view.findViewById(R.id.place_phone);
+        placeWesiteView = (TextView) view.findViewById(R.id.place_website);
 
         placeId = locationPOJO.getPlace_id();
         Picasso.with(getContext()).load(Utilities.getPathToImage(placeId)).into(imageView);
@@ -91,6 +97,20 @@ LinearLayout mLinearLayout;
         placeRating = locationPOJO.getPlace_rating();
         ratingBar.setRating(Utilities.parseRating(placeRating));
 
+        placePhone = locationPOJO.getPlace_phone();
+        if(placePhone != null){
+            placePhoneView.setText(placePhone);
+        }else{
+            placePhoneView.setVisibility(View.GONE);
+        }
+
+        placeWebsite = locationPOJO.getPlace_website();
+        if(placeWebsite != null){
+            placeWesiteView.setText(placeWebsite);
+        }else {
+            placeWesiteView.setVisibility(View.GONE);
+        }
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,9 +121,9 @@ LinearLayout mLinearLayout;
     }
 
     public static LocationDetailsFragment newInstance(Bundle bundle) {
-        LocationDetailsFragment fragment = new LocationDetailsFragment ();
+        LocationDetailsFragment fragment = new LocationDetailsFragment();
         Bundle args = new Bundle();
-         args.putBundle("MY_BUNDLE", bundle);
+        args.putBundle("MY_BUNDLE", bundle);
         fragment.setArguments(args);
         return fragment;
     }
@@ -114,13 +134,13 @@ LinearLayout mLinearLayout;
         if (fragment_id == Constants.FRAGMENT_VISITED) {
             try {
                 getContext().getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 Log.d("Database Error", "Delete Error");
             }
         } else if (fragment_id == Constants.FRAGMENT_TOVISIT) {
             try {
                 getContext().getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 Log.d("Database Error", "Delete Error");
             }
         }

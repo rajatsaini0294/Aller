@@ -45,7 +45,10 @@ public class WidgetProvider extends AppWidgetProvider {
                             PendingIntent.FLAG_UPDATE_CURRENT);
 
             widget.setPendingIntentTemplate(R.id.list_view, clickPI);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.list_view);
+            //appWidgetManager.updateAppWidget(new ComponentName(context, WidgetProvider.class), widget);
             appWidgetManager.updateAppWidget(appWidgetIds[i], widget);
+
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);

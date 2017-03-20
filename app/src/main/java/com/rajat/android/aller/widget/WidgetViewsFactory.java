@@ -3,29 +3,23 @@ package com.rajat.android.aller.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.data.DataProvider;
+import com.rajat.android.aller.data.TableColumns;
 
 /**
  * Created by rajat on 3/17/2017.
  */
 
 public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-
-    private static final String[] items={"lorem", "ipsum", "dolor",
-            "sit", "amet", "consectetuer",
-            "adipiscing", "elit", "morbi",
-            "vel", "ligula", "vitae",
-            "arcu", "aliquet", "mollis",
-            "etiam", "vel", "erat",
-            "placerat", "ante",
-            "porttitor", "sodales",
-            "pellentesque", "augue",
-            "purus"};
+    Cursor cursor;
+    private static final String[] items = {"Kashmir", "Nanda Devi", "Manali", "Kullu", "Goa", "Mumbai", "Pune"};
     private Context context = null;
     private int appWidgetId;
 
@@ -37,40 +31,55 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public void onCreate() {
+        cursor = context.getContentResolver().query(DataProvider.ToVisit.CONTENT_URI, new String[]{TableColumns.PLACE_NAME}, null, null, null);
+        cursor.moveToFirst();
+        Log.d("..........", "on create");
 
     }
 
     @Override
     public void onDataSetChanged() {
-
+        cursor = context.getContentResolver().query(DataProvider.ToVisit.CONTENT_URI, new String[]{TableColumns.PLACE_NAME}, null, null, null);
+        cursor.moveToFirst();
+        Log.d("..........", "data set changd");
     }
 
     @Override
     public void onDestroy() {
-
+        if (this.cursor != null) {
+            this.cursor.close();
+        }
     }
 
     @Override
     public int getCount() {
-        return items.length;
+        if (cursor != null && cursor.getCount() > 0)
+            return cursor.getCount();
+        return 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews row=new RemoteViews(context.getPackageName(),
-                R.layout.widget_row_item);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToPosition(position);
+            RemoteViews row = new RemoteViews(context.getPackageName(),
+                    R.layout.widget_row_item);
 
-        Log.d("Loading:- ", items[position]);
 
-        row.setTextViewText(R.id.item_name, items[position]);
+            String placeName = cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_NAME));
+            Log.d("Loading:- ", placeName + " " + position);
 
-        Intent i=new Intent();
-        Bundle extras=new Bundle();
-        extras.putString(WidgetProvider.EXTRA_WORD, items[position]);
-        i.putExtras(extras);
-        row.setOnClickFillInIntent(R.id.item_name, i);
+            row.setTextViewText(R.id.item_name, placeName);
 
-        return(row);
+            Intent i = new Intent();
+            Bundle extras = new Bundle();
+            extras.putString(WidgetProvider.EXTRA_WORD, placeName);
+            i.putExtras(extras);
+            row.setOnClickFillInIntent(R.id.item_name, i);
+
+            return (row);
+        }
+        return null;
     }
 
     @Override
@@ -92,4 +101,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
     public boolean hasStableIds() {
         return true;
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.rajat.android.aller.widget;
+package com.rajat.android.aller.appWidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;

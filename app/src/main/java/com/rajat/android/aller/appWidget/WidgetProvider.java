@@ -1,4 +1,4 @@
-package com.rajat.android.aller.widget;
+package com.rajat.android.aller.appWidget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

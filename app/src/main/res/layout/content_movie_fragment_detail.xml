@@ -101,8 +101,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:contentDescription="@string/add_location"
+        android:contentDescription="@string/remove_location"
         android:elevation="@dimen/fab_elevation"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_remove"
         android:translationZ="@dimen/fab_press_translation_z" />
 </LinearLayout>

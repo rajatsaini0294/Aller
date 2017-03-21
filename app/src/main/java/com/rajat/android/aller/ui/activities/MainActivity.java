@@ -20,7 +20,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST= 1;
-    public final String folder = "Aller";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        createAppDirectory(folder);
+        createAppDirectory();
     }
 
-    private int createAppDirectory(String folderName) {
+    private int createAppDirectory() {
 
         String state = Environment.getExternalStorageState();
         if (!Environment.MEDIA_MOUNTED.equals(state)) {
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
+        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), getResources().getString(R.string.app_name));
         int result = 0;
         if (folder.exists()) {
             result = 2;
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
+                    File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),getResources().getString(R.string.app_name) );
                     if (folder.exists()) {
 
                     } else {

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="app_name">Aller</string>
+
     <string name="add_location">add location</string>
     <string name="remove_location">remove_location</string>
 </resources>

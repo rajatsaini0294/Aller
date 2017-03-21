@@ -77,7 +77,7 @@ public class LocationDetailsFragment extends Fragment {
         placeWesiteView = (TextView) view.findViewById(R.id.place_website);
 
         placeId = locationPOJO.getPlace_id();
-        Picasso.with(getContext()).load(Utilities.getPathToImage(placeId)).into(imageView);
+        Picasso.with(getContext()).load(Utilities.getPathToImage(placeId)).placeholder(R.drawable.ic_image_placeholder).into(imageView);
 
 
         placeName = locationPOJO.getPlace_name();

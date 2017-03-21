@@ -6,6 +6,6 @@
     <string name="action_add">add</string>
     <string name="add_location">add location</string>
     <string name="detail_image_desc">place image</string>
-    <string name="remove_location">remove</string>
+    <string name="remove_location">remove_location</string>
 
 </resources>

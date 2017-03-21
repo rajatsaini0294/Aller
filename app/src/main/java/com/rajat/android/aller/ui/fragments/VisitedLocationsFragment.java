@@ -73,7 +73,7 @@ public class VisitedLocationsFragment extends Fragment
     RecyclerView recyclerView;
     LocationPOJO locationPOJO;
     FrameLayout frameLayout;
-
+    FrameLayout frameLayout1;
     String latitude = null;
     String longitude = null;
     Bitmap VolleyBitmap;
@@ -100,8 +100,6 @@ public class VisitedLocationsFragment extends Fragment
                 .build();
 
         View view = inflater.inflate(R.layout.fragment_visited_locations, container, false);
-
-
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout);
 
         //imageView = (ImageView) view.findViewById(R.id.image);

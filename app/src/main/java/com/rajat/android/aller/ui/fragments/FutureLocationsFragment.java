@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -209,7 +208,6 @@ public class FutureLocationsFragment extends Fragment implements
                 null,
                 null,
                 null);
-        Log.d("...............", "loader created");
         return cursorLoader;
     }
 
@@ -219,8 +217,6 @@ public class FutureLocationsFragment extends Fragment implements
         loadedCursor = cursor;
         adapter.setCursor(cursor);
         adapter.notifyDataSetChanged();
-        Log.d("...............", "loader finished");
-
     }
 
     @Override
@@ -246,7 +242,7 @@ public class FutureLocationsFragment extends Fragment implements
                     }
                 } while (loadedCursor.moveToNext());
             } else {
-                Log.d("Cursor Error:", "LoadedCursor is null");
+                Log.d("Cursor Error:", "Loaded Cursor is null");
             }
             return false;
         }
@@ -311,7 +307,6 @@ public class FutureLocationsFragment extends Fragment implements
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            Toast.makeText(getContext(), "Image Saved To db", Toast.LENGTH_LONG).show();
             adapter.notifyDataSetChanged();
             if (!flag) {
                 RequestQueue rq = Volley.newRequestQueue(getContext());
@@ -350,11 +345,9 @@ public class FutureLocationsFragment extends Fragment implements
                 }
                 if (photo != null) {
                     bitmap = photo.getPhoto(mGoogleApiClient).await().getBitmap();
-                    Log.d("....................", "phto not null");
 
                     if (bitmap != null) {
                         imagePath = convertBitmapToJPEG(bitmap, place_id);
-                        Log.d("....................", "bitmpa not null");
                     }
 
                 }
@@ -369,7 +362,6 @@ public class FutureLocationsFragment extends Fragment implements
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(Constants.RECYCLER_VIEW_STATE, layoutManager.onSaveInstanceState());
-        Log.d("...........", "on saveinstance");
     }
 
     @Override
@@ -378,7 +370,6 @@ public class FutureLocationsFragment extends Fragment implements
         if (savedInstanceState != null) {
             savedStateParcelable = savedInstanceState.getParcelable(Constants.RECYCLER_VIEW_STATE);
         }
-        Log.d("...........", "on restore instance");
 
     }
 
@@ -388,6 +379,5 @@ public class FutureLocationsFragment extends Fragment implements
         if (savedStateParcelable != null) {
             layoutManager.onRestoreInstanceState(savedStateParcelable);
         }
-        Log.d("...........", "on resume instance");
     }
 }

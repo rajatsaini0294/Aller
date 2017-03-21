@@ -69,14 +69,11 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     cursor.moveToPosition(position);
-                    Log.d("..........", "Clicked " + position + " " + cursor.getString(cursor.getColumnIndex(TableColumns._ID)));
                     Parcelable parcelable = exportToParcel(position);
                     if (parcelable != null) {
                         Intent intent = new Intent(context, LocationDetailsActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putParcelable(PARCEL_KEY, parcelable);
-                        //intent.putExtra(PARCEL_KEY, parcelable);
-                        //intent.putExtra(Constants.FRAGMENT_KEY, fragment);
                         bundle.putInt(Constants.FRAGMENT_KEY, fragment);
                         intent.putExtras(bundle);
                         context.startActivity(intent);

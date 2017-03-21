@@ -81,7 +81,6 @@ public class VisitedLocationsFragment extends Fragment
     Cursor loadedCursor = null;
 
     public VisitedLocationsFragment() {
-        // Required empty public constructor
     }
 
 
@@ -102,7 +101,6 @@ public class VisitedLocationsFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_visited_locations, container, false);
         frameLayout = (FrameLayout) view.findViewById(R.id.frame_layout);
 
-        //imageView = (ImageView) view.findViewById(R.id.image);
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -145,8 +143,6 @@ public class VisitedLocationsFragment extends Fragment
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 saveToDb(data);
-                Log.d("..........", "000000000");
-
             }
         }
     }
@@ -248,7 +244,6 @@ public class VisitedLocationsFragment extends Fragment
                     }
                 } while (loadedCursor.moveToNext());
             } else {
-                Log.d("Cursor Error:", "LoadedCursor is null");
             }
             return false;
         }
@@ -314,7 +309,6 @@ public class VisitedLocationsFragment extends Fragment
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            Toast.makeText(getContext(), "Image Saved To db", Toast.LENGTH_LONG).show();
             adapter.notifyDataSetChanged();
             if (!flag) {
                 RequestQueue rq = Volley.newRequestQueue(getContext());
@@ -372,7 +366,6 @@ public class VisitedLocationsFragment extends Fragment
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(Constants.RECYCLER_VIEW_STATE, layoutManager.onSaveInstanceState());
-        Log.d("...........","on saveinstance");
     }
 
     @Override
@@ -381,8 +374,6 @@ public class VisitedLocationsFragment extends Fragment
         if(savedInstanceState !=null){
             savedStateParcelable = savedInstanceState.getParcelable(Constants.RECYCLER_VIEW_STATE);
         }
-        Log.d("...........","on restore instance");
-
     }
 
     @Override
@@ -391,6 +382,5 @@ public class VisitedLocationsFragment extends Fragment
         if(savedStateParcelable != null){
             layoutManager.onRestoreInstanceState(savedStateParcelable);
         }
-        Log.d("...........","on resume instance");
     }
 }

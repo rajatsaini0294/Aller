@@ -33,15 +33,12 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
     public void onCreate() {
         cursor = context.getContentResolver().query(DataProvider.ToVisit.CONTENT_URI, new String[]{TableColumns.PLACE_NAME}, null, null, null);
         cursor.moveToFirst();
-        Log.d("..........", "on create");
-
     }
 
     @Override
     public void onDataSetChanged() {
         cursor = context.getContentResolver().query(DataProvider.ToVisit.CONTENT_URI, new String[]{TableColumns.PLACE_NAME}, null, null, null);
         cursor.moveToFirst();
-        Log.d("..........", "data set changd");
     }
 
     @Override
@@ -67,7 +64,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
 
             String placeName = cursor.getString(cursor.getColumnIndex(TableColumns.PLACE_NAME));
-            Log.d("Loading:- ", placeName + " " + position);
 
             row.setTextViewText(R.id.item_name, placeName);
 

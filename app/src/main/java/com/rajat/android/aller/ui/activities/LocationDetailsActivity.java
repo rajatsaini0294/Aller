@@ -19,8 +19,6 @@ LocationPOJO locationPOJO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //locationPOJO = getIntent().getParcelableExtra(PARCEL_KEY);
-        //fragment_id = getIntent().getIntExtra("FRAGMENT", 0);
         setContentView(R.layout.activity_location_details);
 
 
@@ -48,25 +46,4 @@ LocationPOJO locationPOJO;
 
     }
 
-/*
-    private void deleteLocation() {
-
-        String args[] = {placeId};
-        if (fragment_id == Constants.FRAGMENT_VISITED) {
-            getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-        } else if (fragment_id == Constants.FRAGMENT_TOVISIT) {
-            getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-        }
-        deleteImage();
-        Snackbar.make(coordinatorLayout, "Location removed", Snackbar.LENGTH_LONG).show();
-
-    }
-
-    private void deleteImage() {
-        File file = Utilities.getPathToImage(placeId);
-        if (file != null && file.exists()) {
-            file.delete();
-        }
-    }
-    */
 }

@@ -20,7 +20,6 @@ import com.rajat.android.aller.ui.activities.MainActivity;
 public class WidgetProvider extends AppWidgetProvider {
     public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
 
-    public static final String EXTRA_ITEM = "com.example.edockh.EXTRA_ITEM";
     public static String EXTRA_WORD =
             "com.rajat.android.aller.widget";
 
@@ -46,7 +45,6 @@ public class WidgetProvider extends AppWidgetProvider {
 
             widget.setPendingIntentTemplate(R.id.list_view, clickPI);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.list_view);
-            //appWidgetManager.updateAppWidget(new ComponentName(context, WidgetProvider.class), widget);
             appWidgetManager.updateAppWidget(appWidgetIds[i], widget);
 
         }
@@ -64,8 +62,6 @@ public class WidgetProvider extends AppWidgetProvider {
         if (intent.getAction().equals(UPDATE_MEETING_ACTION)) {
 
             int appWidgetIds[] = mgr.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
-
-            Log.e("received", intent.getAction());
 
             mgr.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
 

@@ -20,7 +20,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
-    File appDirectoryPath;
     public final String folder = "Aller";
 
     @Override
@@ -45,18 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
         String state = Environment.getExternalStorageState();
         if (!Environment.MEDIA_MOUNTED.equals(state)) {
-            Log.d("myAppName", "Error: external storage is unavailable");
             return 0;
         }
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            Log.d("myAppName", "Error: external storage is read only.");
             return 0;
         }
 
         if (ContextCompat.checkSelfPermission(this, // request permission when it is not granted.
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            Log.d("myAppName", "permission:WRITE_EXTERNAL_STORAGE: NOT granted!");
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
@@ -70,26 +66,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!Environment.MEDIA_MOUNTED.equals(state)) {
-            Log.d("myAppName", "Error: external storage is unavailable");
             return 0;
         }
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            Log.d("myAppName", "Error: external storage is read only.");
             return 0;
         }
 
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
         int result = 0;
         if (folder.exists()) {
-            Log.d("myAppName", "folder exist:" + folder.toString());
             result = 2;
         } else {
             try {
                 if (folder.mkdir()) {
-                    Log.d("myAppName", "folder created:" + folder.toString());
                     result = 1;
                 } else {
-                    Log.d("myAppName", "creat folder fails:" + folder.toString());
                     result = 0;
                 }
             } catch (Exception ecp) {
@@ -113,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         try {
                             if (folder.mkdir()) {
-                                Log.d("................", "folder created");
                             }
                         } catch (Exception ecp) {
                             ecp.printStackTrace();

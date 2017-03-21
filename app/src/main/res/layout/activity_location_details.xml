@@ -22,4 +22,16 @@
 
     <include layout="@layout/content_movie_activity_detail" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        app:borderWidth="0dp"
+        android:contentDescription="@string/remove_location"
+        android:elevation="@dimen/fab_elevation"
+        android:src="@drawable/ic_remove"
+        android:translationZ="@dimen/fab_press_translation_z" />
 </android.support.design.widget.CoordinatorLayout>

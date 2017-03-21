@@ -3,10 +3,8 @@ package com.rajat.android.aller.ui.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +16,9 @@ import android.widget.TextView;
 import com.rajat.android.aller.R;
 import com.rajat.android.aller.Util.Constants;
 import com.rajat.android.aller.Util.Utilities;
-import com.rajat.android.aller.data.DataProvider;
-import com.rajat.android.aller.data.TableColumns;
 import com.rajat.android.aller.model.LocationPOJO;
 import com.rajat.android.aller.ui.widget.BezelImageView;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +43,6 @@ public class LocationDetailsFragment extends Fragment {
     TextView placeAddressTextView;
     ImageView imageView;
     FloatingActionButton floatingActionButton;
-    int fragment_id;
     LinearLayout mLinearLayout;
 
     public LocationDetailsFragment() {
@@ -63,7 +56,6 @@ public class LocationDetailsFragment extends Fragment {
 
         Bundle extras = getArguments().getBundle(Constants.FRAGMENT_BUNDLE);
         locationPOJO = extras.getParcelable(Constants.PARCEL_KEY);
-        fragment_id = extras.getInt(Constants.FRAGMENT_KEY);
 
         placeNameTextView = (TextView) view.findViewById(R.id.place_name);
         cardView = (CardView) view.findViewById(R.id.card_view);
@@ -107,12 +99,6 @@ public class LocationDetailsFragment extends Fragment {
             placeWesiteView.setVisibility(View.GONE);
         }
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteLocation();
-            }
-        });
         return view;
     }
 
@@ -124,30 +110,5 @@ public class LocationDetailsFragment extends Fragment {
         return fragment;
     }
 
-    private void deleteLocation() {
 
-        String args[] = {placeId};
-        if (fragment_id == Constants.FRAGMENT_VISITED) {
-            try {
-                getContext().getContentResolver().delete(DataProvider.Visited.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-            } catch (Exception ex) {
-                Log.d("Database Error", "Delete Error");
-            }
-        } else if (fragment_id == Constants.FRAGMENT_TOVISIT) {
-            try {
-                getContext().getContentResolver().delete(DataProvider.ToVisit.CONTENT_URI, TableColumns.PLACE_ID + "=?", args);
-            } catch (Exception ex) {
-                Log.d("Database Error", "Delete Error");
-            }
-        }
-        deleteImage();
-        Snackbar.make(mLinearLayout, "Location removed", Snackbar.LENGTH_LONG).show();
-    }
-
-    private void deleteImage() {
-        File file = Utilities.getPathToImage(placeId);
-        if (file != null && file.exists()) {
-            file.delete();
-        }
-    }
 }

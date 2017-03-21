@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/linear_layout_component"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -14,6 +14,7 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp"
         card_view:cardMaxElevation="8dp">
@@ -94,15 +95,4 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:contentDescription="@string/remove_location"
-        android:elevation="@dimen/fab_elevation"
-        android:src="@drawable/ic_remove"
-        android:translationZ="@dimen/fab_press_translation_z" />
 </LinearLayout>

@@ -31,8 +31,6 @@ import java.io.File;
  */
 public class LocationDetailsFragment extends Fragment {
 
-    final private String PARCEL_KEY = "parcelKey";
-
     LocationPOJO locationPOJO;
     TextView placeNameTextView;
     TextView placePhoneView;
@@ -63,8 +61,8 @@ public class LocationDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location_details, container, false);
 
-        Bundle extras = getArguments().getBundle("MY_BUNDLE");
-        locationPOJO = extras.getParcelable(PARCEL_KEY);
+        Bundle extras = getArguments().getBundle(Constants.FRAGMENT_BUNDLE);
+        locationPOJO = extras.getParcelable(Constants.PARCEL_KEY);
         fragment_id = extras.getInt(Constants.FRAGMENT_KEY);
 
         placeNameTextView = (TextView) view.findViewById(R.id.place_name);
@@ -121,7 +119,7 @@ public class LocationDetailsFragment extends Fragment {
     public static LocationDetailsFragment newInstance(Bundle bundle) {
         LocationDetailsFragment fragment = new LocationDetailsFragment();
         Bundle args = new Bundle();
-        args.putBundle("MY_BUNDLE", bundle);
+        args.putBundle(Constants.FRAGMENT_BUNDLE, bundle);
         fragment.setArguments(args);
         return fragment;
     }

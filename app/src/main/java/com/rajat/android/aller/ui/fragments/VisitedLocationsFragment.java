@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -66,7 +65,6 @@ public class VisitedLocationsFragment extends Fragment
     Parcelable savedStateParcelable = null;
 
     FloatingActionButton floatingActionButton;
-    int PLACE_PICKER_REQUEST = 1;
     ImageView imageView;
     GoogleApiClient googleApiClient;
     GridAdapter adapter;
@@ -130,7 +128,7 @@ public class VisitedLocationsFragment extends Fragment
     private void startPlacePicker() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-            startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+            startActivityForResult(builder.build(getActivity()), Constants.PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
@@ -140,7 +138,7 @@ public class VisitedLocationsFragment extends Fragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
+        if (requestCode == Constants.PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 saveToDb(data);
             }

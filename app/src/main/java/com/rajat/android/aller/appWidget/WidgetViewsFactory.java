@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Constants;
 import com.rajat.android.aller.data.DataProvider;
 import com.rajat.android.aller.data.TableColumns;
 
@@ -69,7 +69,7 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
             Intent i = new Intent();
             Bundle extras = new Bundle();
-            extras.putString(WidgetProvider.EXTRA_WORD, placeName);
+            extras.putString(Constants.EXTRA_WORD_WIDGET, placeName);
             i.putExtras(extras);
             row.setOnClickFillInIntent(R.id.item_name, i);
 

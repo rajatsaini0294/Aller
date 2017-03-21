@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.rajat.android.aller.R;
@@ -19,9 +18,6 @@ import com.rajat.android.aller.ui.activities.MainActivity;
 
 public class WidgetProvider extends AppWidgetProvider {
     public static final String UPDATE_MEETING_ACTION = "android.appwidget.action.APPWIDGET_UPDATE";
-
-    public static String EXTRA_WORD =
-            "com.rajat.android.aller.widget";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

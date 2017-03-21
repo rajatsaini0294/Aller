@@ -54,6 +54,7 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.location.places.ui.PlacePicker.getPlace;
+import static com.rajat.android.aller.Util.Constants.PLACE_PICKER_REQUEST;
 import static com.rajat.android.aller.Util.Utilities.convertBitmapToJPEG;
 import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
 
@@ -65,7 +66,6 @@ public class FutureLocationsFragment extends Fragment implements
 
     Parcelable savedStateParcelable = null;
     FloatingActionButton floatingActionButton;
-    int PLACE_PICKER_REQUEST = 1;
     ImageView imageView;
     GoogleApiClient mGoogleApiClient;
     GridAdapter adapter;
@@ -129,7 +129,7 @@ public class FutureLocationsFragment extends Fragment implements
     private void startPlacePicker() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-            startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+            startActivityForResult(builder.build(getActivity()), Constants.PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
@@ -139,7 +139,7 @@ public class FutureLocationsFragment extends Fragment implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
+        if (requestCode == Constants.PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 saveToDb(data);
             }

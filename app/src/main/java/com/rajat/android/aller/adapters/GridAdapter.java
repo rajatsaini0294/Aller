@@ -34,7 +34,6 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     Cursor cursor = null;
     int fragment;
-    final private String PARCEL_KEY = "parcelKey";
     public GridAdapter(Context context) {
         this.context = context;
     }
@@ -73,7 +72,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     if (parcelable != null) {
                         Intent intent = new Intent(context, LocationDetailsActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable(PARCEL_KEY, parcelable);
+                        bundle.putParcelable(Constants.PARCEL_KEY, parcelable);
                         bundle.putInt(Constants.FRAGMENT_KEY, fragment);
                         intent.putExtras(bundle);
                         context.startActivity(intent);

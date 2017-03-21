@@ -7,14 +7,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.rajat.android.aller.R;
+import com.rajat.android.aller.Util.Constants;
 import com.rajat.android.aller.model.LocationPOJO;
 import com.rajat.android.aller.ui.fragments.LocationDetailsFragment;
 
 public class LocationDetailsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-LocationPOJO locationPOJO;
-    final private String PARCEL_KEY = "parcelKey";
+    LocationPOJO locationPOJO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ LocationPOJO locationPOJO;
 
 
         Bundle bundle = getIntent().getExtras();
-        locationPOJO = bundle.getParcelable(PARCEL_KEY);
+        locationPOJO = bundle.getParcelable(Constants.PARCEL_KEY);
         LocationDetailsFragment fragment = LocationDetailsFragment.newInstance(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, fragment);

@@ -6,5 +6,6 @@
     <string name="add_location">add location</string>
     <string name="detail_image_desc">place image</string>
     <string name="remove_location">remove_location</string>
+    <string name="bucket_list">Bucket List</string>
 
 </resources>

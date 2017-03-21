@@ -3,18 +3,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#7d000000"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/widget_name"
+        style="@style/Base.TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bucket list" />
+        android:paddingLeft="18dp"
+        android:text="@string/bucket_list"
+        android:textStyle="bold" />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="3dp" />
+        android:layout_height="match_parent" />
 </LinearLayout>

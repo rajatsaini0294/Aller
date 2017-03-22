@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -21,6 +20,7 @@ import com.rajat.android.aller.Util.Utilities;
 import com.rajat.android.aller.data.TableColumns;
 import com.rajat.android.aller.model.LocationPOJO;
 import com.rajat.android.aller.ui.activities.LocationDetailsActivity;
+import com.rajat.android.aller.ui.widget.BezelImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -118,14 +118,14 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView textView;
         private CardView cardView;
         private RatingBar ratingBar;
-        private ImageView imageView;
+        private BezelImageView imageView;
 
         public GridViewHolder(View view) {
             super(view);
             textView = (TextView) view.findViewById(R.id.place_name);
             cardView = (CardView) view.findViewById(R.id.card_view);
             ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
-            imageView = (ImageView) view.findViewById(R.id.place_image);
+            imageView = (BezelImageView) view.findViewById(R.id.place_image);
         }
     }
 

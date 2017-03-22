@@ -6,4 +6,6 @@
 
     <color name="orange">#ff7b00</color>
     <color name="white">#ffffff</color>
+    <color name="pallete_background">#7d000000</color>
+    <color name="pallete_text_color">#ffffffff</color>
 </resources>

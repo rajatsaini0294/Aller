@@ -5,9 +5,9 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/card_layout_margin"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="@dimen/card_corner_radius"
     card_view:cardElevation="@dimen/card_resting_elevation"
     card_view:cardMaxElevation="@dimen/card_raised_elevation">
 
@@ -29,9 +29,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="#7d000000"
+            android:background="@color/pallete_background"
             android:orientation="vertical">
 
             <TextView
@@ -40,19 +40,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
                 android:ellipsize="end"
-                android:lines="1"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="16dp"
-                android:textColor="#ffffffff"
-                android:textSize="16sp" />
+                android:lines="@string/pallete_max_lines"
+                android:paddingLeft="@dimen/pallete_text_view_padding_left"
+                android:paddingRight="@dimen/pallete_text_view_padding_right"
+                android:paddingTop="@dimen/pallete_text_view_padding_top"
+                android:textColor="@color/pallete_text_color"
+                android:textSize="@dimen/pallete_text_view_size" />
 
             <android.support.v7.widget.AppCompatRatingBar
                 android:id="@+id/rating_bar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="@dimen/pallete_rating_bar_margin_left"
+                android:layout_marginBottom="@dimen/pallete_rating_bar_margin_bottom"
                 android:numStars="5"
                 android:stepSize="0.5"
                 android:theme="@style/RatingBar" />

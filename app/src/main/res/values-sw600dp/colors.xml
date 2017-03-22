@@ -2,4 +2,5 @@
 <resources>
     <color name="pallete_background">#7d000000</color>
     <color name="pallete_text_color">#ffffffff</color>
+    <color name="widget_background">#7d000000</color>
 </resources>

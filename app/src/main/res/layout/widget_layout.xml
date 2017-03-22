@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#7d000000"
+    android:background="@color/widget_background"
     android:orientation="vertical">
 
     <TextView
@@ -11,7 +11,7 @@
         style="@style/Base.TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="18dp"
+        android:paddingLeft="@dimen/widget_title_padding_left"
         android:text="@string/bucket_list"
         android:textStyle="bold" />
 

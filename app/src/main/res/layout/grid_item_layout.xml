@@ -12,8 +12,8 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="2dp"
-        card_view:cardMaxElevation="8dp">
+        card_view:cardElevation="@dimen/card_resting_elevation"
+        card_view:cardMaxElevation="@dimen/card_raised_elevation">
 
         <FrameLayout
             android:layout_width="match_parent"

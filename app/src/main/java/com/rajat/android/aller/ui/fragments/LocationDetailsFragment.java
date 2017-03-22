@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rajat.android.aller.R;
@@ -43,7 +43,7 @@ public class LocationDetailsFragment extends Fragment {
     TextView placeAddressTextView;
     ImageView imageView;
     FloatingActionButton floatingActionButton;
-    LinearLayout mLinearLayout;
+    ScrollView mScrollView;
 
     public LocationDetailsFragment() {
     }
@@ -63,7 +63,7 @@ public class LocationDetailsFragment extends Fragment {
         placeAddressTextView = (TextView) view.findViewById(R.id.place_address);
         ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
         imageView = (ImageView) view.findViewById(R.id.place_image);
-        mLinearLayout = (LinearLayout) view.findViewById(R.id.linear_layout_component);
+        mScrollView = (ScrollView) view.findViewById(R.id.linear_layout_component);
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_remove);
         placePhoneView = (TextView) view.findViewById(R.id.place_phone);
         placeWesiteView = (TextView) view.findViewById(R.id.place_website);

@@ -9,3 +9,4 @@
 .externalNativeBuild
 /app/src/main/res/values/keys.xml
 /gradle.properties
+!/gradle.properties

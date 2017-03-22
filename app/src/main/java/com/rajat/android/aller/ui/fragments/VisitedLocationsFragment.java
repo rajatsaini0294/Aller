@@ -86,7 +86,7 @@ public class VisitedLocationsFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)  {
 
-
+        setRetainInstance(true);
         getActivity().getSupportLoaderManager().initLoader(Constants.CURSOR_LOADER_VISITED_FRAGMENT, null, this);
 
         googleApiClient= new GoogleApiClient.Builder(getActivity())

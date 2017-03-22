@@ -54,7 +54,6 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.location.places.ui.PlacePicker.getPlace;
-import static com.rajat.android.aller.Util.Constants.PLACE_PICKER_REQUEST;
 import static com.rajat.android.aller.Util.Utilities.convertBitmapToJPEG;
 import static com.rajat.android.aller.data.TableColumns.PLACE_LATITUDE;
 
@@ -88,6 +87,7 @@ public class FutureLocationsFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_future_locations, container, false);
 
         getActivity().getSupportLoaderManager().initLoader(Constants.CURSOR_LOADER_FUTURE_FRAGMENT, null, this);

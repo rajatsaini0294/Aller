@@ -12,8 +12,8 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
         android:layout_margin="@dimen/card_view_layout_margin"
+        app:cardUseCompatPadding="true"
         card_view:cardCornerRadius="@dimen/card_corner_radius"
         card_view:cardElevation="@dimen/card_resting_elevation"
         card_view:cardMaxElevation="@dimen/card_raised_elevation">
@@ -44,8 +44,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/squarelinearLayout"
                 android:paddingBottom="@dimen/detail_place_name_padding_bottom"
+                android:paddingEnd="@dimen/detail_place_name_padding_right"
                 android:paddingLeft="@dimen/detail_place_name_padding_left"
                 android:paddingRight="@dimen/detail_place_name_padding_right"
+                android:paddingStart="@dimen/detail_place_name_padding_left"
+
                 android:textSize="@dimen/detail_place_name_text_size" />
 
             <android.support.v7.widget.AppCompatRatingBar
@@ -55,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/place_name"
                 android:layout_marginLeft="@dimen/detail_rating_bar_margin_left"
+                android:layout_marginStart="@dimen/detail_rating_bar_margin_left"
+
                 android:numStars="5"
                 android:paddingBottom="@dimen/detail_rating_bar_padding_bottom"
                 android:stepSize="0.5"
@@ -66,8 +71,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rating_bar"
                 android:paddingBottom="@dimen/detail_place_address_padding_bottom"
+                android:paddingEnd="@dimen/detail_place_address_padding_right"
                 android:paddingLeft="@dimen/detail_place_address_padding_left"
                 android:paddingRight="@dimen/detail_place_address_padding_right"
+
+                android:paddingStart="@dimen/detail_place_address_padding_left"
                 android:textSize="@dimen/detail_place_address_text_size" />
 
             <TextView
@@ -76,8 +84,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/place_address"
                 android:paddingBottom="@dimen/detail_place_website_padding_bottom"
+                android:paddingEnd="@dimen/detail_place_website_padding_right"
                 android:paddingLeft="@dimen/detail_place_website_padding_left"
+
                 android:paddingRight="@dimen/detail_place_website_padding_right"
+                android:paddingStart="@dimen/detail_place_website_padding_left"
+
                 android:textSize="@dimen/detail_place_website_text_size" />
 
             <TextView
@@ -86,8 +98,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/place_website"
                 android:paddingBottom="@dimen/detail_place_phone_padding_bottom"
+                android:paddingEnd="@dimen/detail_place_phone_padding_right"
                 android:paddingLeft="@dimen/detail_place_phone_padding_left"
                 android:paddingRight="@dimen/detail_place_phone_padding_right"
+                android:paddingStart="@dimen/detail_place_phone_padding_left"
                 android:textSize="@dimen/detail_place_phone_text_size" />
 
         </RelativeLayout>

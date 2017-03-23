@@ -38,11 +38,14 @@
                 android:id="@+id/place_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
+                android:layout_gravity="start|bottom"
                 android:ellipsize="end"
                 android:lines="@string/pallete_max_lines"
                 android:paddingLeft="@dimen/pallete_text_view_padding_left"
+                android:paddingStart="@dimen/pallete_text_view_padding_left"
                 android:paddingRight="@dimen/pallete_text_view_padding_right"
+                android:paddingEnd="@dimen/pallete_text_view_padding_right"
+
                 android:paddingTop="@dimen/pallete_text_view_padding_top"
                 android:textColor="@color/pallete_text_color"
                 android:textSize="@dimen/pallete_text_view_size" />
@@ -53,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/pallete_rating_bar_margin_left"
+                android:layout_marginStart="@dimen/pallete_rating_bar_margin_left"
                 android:layout_marginBottom="@dimen/pallete_rating_bar_margin_bottom"
                 android:numStars="5"
                 android:stepSize="0.5"

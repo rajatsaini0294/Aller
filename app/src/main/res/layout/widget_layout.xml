@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/widget_title_padding_left"
+        android:paddingStart="@dimen/widget_title_padding_left"
         android:text="@string/bucket_list"
         android:textStyle="bold" />
 

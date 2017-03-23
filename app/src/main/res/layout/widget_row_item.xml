@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/widget_list_item_padding_left"
+        android:paddingStart="@dimen/widget_list_item_padding_left"
         android:textStyle="bold" />
 
 </LinearLayout>

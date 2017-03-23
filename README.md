@@ -1,5 +1,5 @@
 # Aller
-Udacity Capstone Project -Aller
+Udacity Capstone Project - Aller
 
 This repository hosts the source code for Android application Aller which helps you to track the places you want to visit or 
 already have visited.
@@ -20,3 +20,8 @@ Key in the MyStaticMapsApiKey field in the gradle.properties field.
 * [SimonVT Schematic](https://github.com/SimonVT/schematic)
 * [Volley](https://developer.android.com/training/volley/index.html)
 * [Picasso](http://square.github.io/picasso/)
+
+**API**
+- - - -
+* Google Places API
+* Static Maps API

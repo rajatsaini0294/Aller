@@ -6,6 +6,7 @@ package com.rajat.android.aller.Util;
 
 public class Constants {
 
+    public static final String FOLDER_NAME = "Aller";
     public static final String VISITED = "visited";
     public static final String TO_VISIT = "to_visit";
     public static final int CURSOR_LOADER_FUTURE_FRAGMENT = 1;

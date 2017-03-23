@@ -19,7 +19,6 @@ import com.rajat.android.aller.data.TableColumns;
 
 public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     Cursor cursor;
-    private static final String[] items = {"Kashmir", "Nanda Devi", "Manali", "Kullu", "Goa", "Mumbai", "Pune"};
     private Context context = null;
     private int appWidgetId;
 

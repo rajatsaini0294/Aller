@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getResources().getString(R.string.permission_denied), Toast.LENGTH_LONG).show();
                 }
                 return;
             }

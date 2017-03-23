@@ -85,7 +85,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
             }
         }
         deleteImage();
-        Snackbar.make(coordinatorLayout, "Location removed", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(coordinatorLayout, getResources().getString(R.string.location_removed), Snackbar.LENGTH_LONG).show();
     }
 
     private void deleteImage() {

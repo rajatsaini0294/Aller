@@ -279,9 +279,9 @@ public class FutureLocationsFragment extends Fragment implements
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             if (flag) {
-                Snackbar.make(frameLayout, "Location already exist", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(frameLayout, getResources().getString(R.string.location_exist), Snackbar.LENGTH_LONG).show();
             } else {
-                Snackbar.make(frameLayout, "Location saved", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(frameLayout, getResources().getString(R.string.location_saved), Snackbar.LENGTH_LONG).show();
                 new savePlaceImageAsyncTask().execute(placeId);
             }
         }

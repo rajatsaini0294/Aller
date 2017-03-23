@@ -45,7 +45,7 @@ public class Utilities {
 
 
     public static File convertBitmapToJPEG(Bitmap bitmap, String place_id) {
-        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
+        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), Constants.FOLDER_NAME);
         if (folder.exists()) {
             Log.d("............", "folder exist:" + folder.toString());
             String imageName = place_id+".jpg";
@@ -69,7 +69,7 @@ public class Utilities {
     }
 
     public static File getPathToImage(String imageName){
-        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Aller");
+        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), Constants.FOLDER_NAME);
         File imagePath = new File(folder, imageName+".jpg");
         return imagePath;
     }

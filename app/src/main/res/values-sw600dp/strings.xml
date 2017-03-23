@@ -2,4 +2,8 @@
 <resources>
     <string name="bucket_list">Bucket List</string>
     <string name="pallete_max_lines">1</string>
+    <string name="location_exist">Location already exist</string>
+    <string name="location_removed">Location removed</string>
+    <string name="permission_denied">permission denied</string>
+    <string name="location_saved">Location saved</string>
 </resources>

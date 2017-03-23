@@ -1,19 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias 'keyalias'
+            keyPassword 'mykeypassword'
+            storeFile file('keystore-aller.jks')
+            storePassword 'mykeystorePassword'
         }
     }
     defaultConfig {
